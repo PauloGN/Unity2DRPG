@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerStateMachine
 {
-
     public PlayerState currenState { get; private set; }
 
     public void Initialize(PlayerState _startState)
@@ -19,5 +18,4 @@ public class PlayerStateMachine
         currenState = _newState;
         currenState.Enter();
     }
-
 }
