@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     [Header("Move info")]
     public float moveSpeed = 12.0f;
     public float jumpForce = 12.0f;
+    public float xJumpForce = 6.0f;
     [Range(0.0f, 1.0f)]
     public float airControl = 0.5f;
     [Range(0.0f, 1.0f)]
@@ -44,8 +45,12 @@ public class Player : MonoBehaviour
     public PlayerJumpState jumpState { get; private set;}
     public PlayerAirState airState { get; private set;}
     public PlayerWallSlideState wallSlide { get; private set;}
-    public PlayerDashState dashState { get; private set;
-    }
+    public PlayerDashState dashState { get; private set;}
+    public PlayerWallJumpState wallJump { get; private set;}
+
+    //Attack
+    public PlayerPrimaryAttackState primaryAttack { get; private set;}
+
     #endregion
 
     private void Awake ()
@@ -57,6 +62,10 @@ public class Player : MonoBehaviour
         airState  = new PlayerAirState(this, stateMachine, "Jump");
         dashState  = new PlayerDashState(this, stateMachine, "Dash");
         wallSlide = new PlayerWallSlideState(this, stateMachine, "WallSlide");
+        wallJump = new PlayerWallJumpState(this, stateMachine, "Jump");
+
+        //Attack
+        primaryAttack = new PlayerPrimaryAttackState (this, stateMachine, "Attack");
     }
 
     private void Start()
@@ -72,15 +81,13 @@ public class Player : MonoBehaviour
 
         //Inputs
         CheckInputForDash();
+
         //Debug
-        if (IsWallDetected())
-        {
-            Debug.Log("Wall");
-        }
     }
 
     private void CheckInputForDash ()
     {
+        if (IsWallDetected()) return;
 
         dashTimerUsage -= Time.deltaTime;
 
@@ -98,6 +105,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void AnimationTrigger() => stateMachine.currenState.AnimationFinishTrigger();
 
     public void SetVelocity(float xVelocity, float yVelocity)
     {

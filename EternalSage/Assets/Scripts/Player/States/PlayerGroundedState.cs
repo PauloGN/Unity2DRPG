@@ -23,32 +23,51 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
 
-        if (Input.GetButtonDown("Jump") && playerRef.IsGroundDetected())
-        {
-            stateMachineRef.ChangeState(playerRef.jumpState);
-        }
+        CheckJumpInput();
+        CheckAttackInput();
 
         if (!playerRef.IsGroundDetected())
         {
             stateMachineRef.ChangeState(playerRef.airState);
         }
     }
+
+    #region INPUTS
+    private void CheckJumpInput()
+    {
+        if (Input.GetButtonDown("Jump") && playerRef.IsGroundDetected())
+        {
+            stateMachineRef.ChangeState(playerRef.jumpState);
+        }
+    }
+
+    private void CheckAttackInput()
+    {
+        if (Input.GetButtonDown("Attack") && playerRef.IsGroundDetected())
+        {
+            stateMachineRef.ChangeState(playerRef.primaryAttack);
+        }
+    }
+
+    #endregion
 }
+
+
 
 //INPUTS
 /*
     Joystick Button 0: X
-    Joystick Button 1: Square
-    Joystick Button 2: O (C�rculo)
-    Joystick Button 3: Tri�ngulo
+    Joystick Button 1: O (Circulo)
+    Joystick Button 2: Square
+    Joystick Button 3: Triangulo
     Joystick Button 4: L1
     Joystick Button 5: R1
     Joystick Button 6: L2 (gatilho esquerdo)
     Joystick Button 7: R2 (gatilho direito)
     Joystick Button 8: Share
     Joystick Button 9: Options
-    Joystick Button 10: Anal�gico Esquerdo (pressionar)
-    Joystick Button 11: Anal�gico Direito (pressionar)
+    Joystick Button 10: Analagico Esquerdo (pressionar)
+    Joystick Button 11: Analagico Direito (pressionar)
     Joystick Button 12: Touchpad (se pressionado)
-    Joystick Button 13: Bot�o PlayStation (PS)
+    Joystick Button 13: Botao PlayStation (PS)
  */

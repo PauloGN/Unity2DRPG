@@ -22,6 +22,13 @@ public class PlayerWallSlideState : PlayerState
     {
         base.Update();
 
+        if (Input.GetButtonDown("Jump"))
+        {
+            stateMachineRef.ChangeState(playerRef.wallJump);
+            return;
+        }
+
+
         if (playerRef.IsGroundDetected() || !playerRef.IsWallDetected())
         {
             stateMachineRef.ChangeState(playerRef.idleState);

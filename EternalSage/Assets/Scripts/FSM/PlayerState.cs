@@ -12,6 +12,7 @@ public class PlayerState
     private string animBoolName;
 
     protected float stateTimer;
+    protected bool triggerCalled;//used to controll attack states
 
     public PlayerState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName)
     {
@@ -23,6 +24,7 @@ public class PlayerState
     public virtual void Enter()
     {
         playerRef.anim.SetBool(animBoolName, true);
+        triggerCalled = false;
     }
 
     public virtual void Update()
@@ -38,4 +40,10 @@ public class PlayerState
     {
         playerRef.anim.SetBool(animBoolName, false);
     }
+
+    public virtual void AnimationFinishTrigger()
+    {
+        triggerCalled = true;
+    }
+
 }
