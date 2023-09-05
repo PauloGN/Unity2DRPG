@@ -29,5 +29,10 @@ public class PlayerJumpState : PlayerState
         {
             stateMachineRef.ChangeState(playerRef.airState);
         }
+        if (xInput != 0.0f)
+        {
+            float xAirSpeed = xInput * (playerRef.moveSpeed * playerRef.airControl);
+            playerRef.SetVelocity(xAirSpeed, playerRef.rb.velocity.y);
+        }
     }
 }

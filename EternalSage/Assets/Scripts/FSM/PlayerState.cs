@@ -8,6 +8,7 @@ public class PlayerState
     protected PlayerStateMachine stateMachineRef;
     protected Player playerRef;
     protected float xInput;
+    protected float yInput;
     private string animBoolName;
 
     protected float stateTimer;
@@ -27,6 +28,7 @@ public class PlayerState
     public virtual void Update()
     {
         xInput = Input.GetAxisRaw("Horizontal");
+        yInput = Input.GetAxisRaw("Vertical");
         playerRef.anim.SetFloat("yVelocity", playerRef.rb.velocity.y);
         //continually decrease timer
         stateTimer -= Time.deltaTime;

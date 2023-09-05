@@ -21,9 +21,22 @@ public class PlayerAirState : PlayerState
     public override void Update()
     {
         base.Update();
+
+        if (playerRef.IsWallDetected())
+        {
+            stateMachineRef.ChangeState(playerRef.wallSlide);
+        }
+
         if(playerRef.IsGroundDetected())
         {
             stateMachineRef.ChangeState(playerRef.idleState);
         }
+
+        if (xInput != 0.0f)
+        {
+           float xAirSpeed = xInput * (playerRef.moveSpeed * playerRef.airControl);
+           playerRef.SetVelocity(xAirSpeed, playerRef.rb.velocity.y);
+        }
+
     }
 }

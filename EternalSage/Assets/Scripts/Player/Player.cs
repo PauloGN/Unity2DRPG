@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
     [Header("Move info")]
     public float moveSpeed = 12.0f;
     public float jumpForce = 12.0f;
+    [Range(0.0f, 1.0f)]
+    public float airControl = 0.5f;
+    [Range(0.0f, 1.0f)]
+    public float slideControl = 0.5f;
     [Header("Dash info")]
     [Space]
     [SerializeField] float dashCoolDown = 3.0f;
@@ -35,11 +39,11 @@ public class Player : MonoBehaviour
 
     #region FSM System
     public PlayerStateMachine stateMachine { get; private set; }
-
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
     public PlayerJumpState jumpState { get; private set;}
     public PlayerAirState airState { get; private set;}
+    public PlayerWallSlideState wallSlide { get; private set;}
     public PlayerDashState dashState { get; private set;
     }
     #endregion
@@ -47,11 +51,12 @@ public class Player : MonoBehaviour
     private void Awake ()
     {
         stateMachine = new PlayerStateMachine();
-        idleState = new PlayerIdleState(this, stateMachine,"Idle");
-        moveState = new PlayerMoveState(this, stateMachine,"Move");
-        jumpState = new PlayerJumpState(this, stateMachine,"Jump");
-        airState  = new PlayerAirState(this, stateMachine,"Jump");
-        dashState  = new PlayerDashState(this, stateMachine,"Dash");
+        idleState = new PlayerIdleState(this, stateMachine, "Idle");
+        moveState = new PlayerMoveState(this, stateMachine, "Move");
+        jumpState = new PlayerJumpState(this, stateMachine, "Jump");
+        airState  = new PlayerAirState(this, stateMachine, "Jump");
+        dashState  = new PlayerDashState(this, stateMachine, "Dash");
+        wallSlide = new PlayerWallSlideState(this, stateMachine, "WallSlide");
     }
 
     private void Start()
@@ -67,6 +72,11 @@ public class Player : MonoBehaviour
 
         //Inputs
         CheckInputForDash();
+        //Debug
+        if (IsWallDetected())
+        {
+            Debug.Log("Wall");
+        }
     }
 
     private void CheckInputForDash ()
@@ -96,6 +106,7 @@ public class Player : MonoBehaviour
     }
 
     public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
+    public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
 
     private void OnDrawGizmos()
     {
@@ -105,7 +116,7 @@ public class Player : MonoBehaviour
         float yGroundCheck = groundCheck.position.y - groundCheckDistance;
         Gizmos.DrawLine(groundCheck.position, new Vector2(xGroundCheck,yGroundCheck));
         //Walls
-        float xwallCheck = wallCheck.position.x + wallCheckDistance;
+        float xwallCheck = wallCheck.position.x + wallCheckDistance * facingDir;
         float ywallCheck = wallCheck.position.y;
         Gizmos.DrawLine(wallCheck.position, new Vector2(xwallCheck, ywallCheck));
     }
@@ -127,5 +138,4 @@ public class Player : MonoBehaviour
             Flip();
         }
     }
-
 }

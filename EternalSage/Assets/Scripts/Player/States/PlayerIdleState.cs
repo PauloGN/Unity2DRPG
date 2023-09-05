@@ -11,11 +11,18 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        playerRef.SetVelocity(0.0f, playerRef.rb.velocity.y);
     }
 
     public override void Update()
     {
         base.Update();
+
+        if (xInput == playerRef.facingDir && playerRef.IsWallDetected())
+        {
+            return;
+        }
+
         if(xInput != 0 && stateMachineRef.currenState != playerRef.moveState)
         {
             stateMachineRef.ChangeState(playerRef.moveState);
