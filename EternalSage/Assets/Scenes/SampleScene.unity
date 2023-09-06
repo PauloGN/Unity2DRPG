@@ -444,7 +444,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 12
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -654,6 +654,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7612dcae23c114a8a966a61b43b436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackMovement:
+  - {x: 2, y: 2}
+  - {x: 1, y: 3}
+  - {x: 3, y: 4}
   moveSpeed: 12
   jumpForce: 20
   xJumpForce: 6

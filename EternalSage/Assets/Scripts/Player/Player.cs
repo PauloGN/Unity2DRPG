@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    [Header("Attack details")]
+    public Vector2[] attackMovement;
     [Header("Move info")]
     public float moveSpeed = 12.0f;
     public float jumpForce = 12.0f;
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
     //controllers
     public int facingDir { get; private set; } = 1;
     private bool facingRight = true;
+    public bool isBusy { get; private set; } = false;
 
     #region Components
     public Animator anim { get; private set; }
@@ -105,13 +107,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    public IEnumerator BusyFor(float _seconds)
+    {
+        isBusy = true;
+        Debug.Log("True");
+        yield return new WaitForSeconds(_seconds);
+        isBusy = false;
+        Debug.Log("False");
+
+    }
+
     public void AnimationTrigger() => stateMachine.currenState.AnimationFinishTrigger();
+
+    #region Velocity
+    public void ZeroVelocity() => rb.velocity = Vector2.zero;
 
     public void SetVelocity(float xVelocity, float yVelocity)
     {
         rb.velocity = new Vector2(xVelocity, yVelocity);
         FlipController(xVelocity);
     }
+    #endregion
+    #region Collision
 
     public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
     public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
@@ -128,7 +145,8 @@ public class Player : MonoBehaviour
         float ywallCheck = wallCheck.position.y;
         Gizmos.DrawLine(wallCheck.position, new Vector2(xwallCheck, ywallCheck));
     }
-
+    #endregion
+    #region Flip
     public void Flip()
     {
         facingDir *= -1;
@@ -146,4 +164,5 @@ public class Player : MonoBehaviour
             Flip();
         }
     }
+    #endregion
 }

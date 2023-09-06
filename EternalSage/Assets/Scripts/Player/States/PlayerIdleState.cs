@@ -23,7 +23,7 @@ public class PlayerIdleState : PlayerGroundedState
             return;
         }
 
-        if(xInput != 0 && stateMachineRef.currenState != playerRef.moveState)
+        if(xInput != 0 && !playerRef.isBusy)
         {
             stateMachineRef.ChangeState(playerRef.moveState);
         }
