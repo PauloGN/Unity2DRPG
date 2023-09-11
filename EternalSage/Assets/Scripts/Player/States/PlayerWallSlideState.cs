@@ -32,11 +32,13 @@ public class PlayerWallSlideState : PlayerState
         if (playerRef.IsGroundDetected() || !playerRef.IsWallDetected())
         {
             stateMachineRef.ChangeState(playerRef.idleState);
+            return;
         }
 
         if(xInput != 0.0f && playerRef.facingDir != xInput)
         {
-            stateMachineRef.ChangeState(playerRef.idleState);
+            //stateMachineRef.ChangeState(playerRef.idleState);
+            return;
         }
 
         if(yInput < 0)

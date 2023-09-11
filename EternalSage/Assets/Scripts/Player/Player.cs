@@ -110,11 +110,8 @@ public class Player : MonoBehaviour
     public IEnumerator BusyFor(float _seconds)
     {
         isBusy = true;
-        Debug.Log("True");
         yield return new WaitForSeconds(_seconds);
         isBusy = false;
-        Debug.Log("False");
-
     }
 
     public void AnimationTrigger() => stateMachine.currenState.AnimationFinishTrigger();
