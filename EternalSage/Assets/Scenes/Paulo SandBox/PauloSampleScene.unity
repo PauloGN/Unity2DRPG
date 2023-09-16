@@ -302,8 +302,9 @@ GameObject:
   - component: {fileID: 460856725}
   - component: {fileID: 460856727}
   - component: {fileID: 460856726}
-  m_Layer: 0
-  m_Name: Animation
+  - component: {fileID: 460856728}
+  m_Layer: 7
+  m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,7 +319,7 @@ Transform:
   m_GameObject: {fileID: 460856724}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.204, y: 0, z: 0}
+  m_LocalPosition: {x: 0.14, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -397,6 +398,49 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &460856728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460856724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d86567ad1b30e4eaa18ba1b0cab34e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &471195929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 471195930}
+  m_Layer: 7
+  m_Name: WallCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &471195930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471195929}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.172, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1741014367}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +580,7 @@ GameObject:
   - component: {fileID: 628312160}
   - component: {fileID: 628312161}
   - component: {fileID: 628312162}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,7 +707,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 804674237}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -697,7 +741,7 @@ GameObject:
   - component: {fileID: 1013518870}
   - component: {fileID: 1013518871}
   - component: {fileID: 1013518872}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3319,7 +3363,7 @@ GameObject:
   - component: {fileID: 1741014368}
   - component: {fileID: 1741014370}
   - component: {fileID: 1741014369}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemySkeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3335,12 +3379,13 @@ Transform:
   m_GameObject: {fileID: 1741014366}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.983, y: -0.23, z: 0}
+  m_LocalPosition: {x: 5.56, y: -0.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 460856725}
   - {fileID: 1977537066}
+  - {fileID: 471195930}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1741014368
@@ -3357,13 +3402,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 1977537066}
   groundCheckDistance: 0.49
-  wallCheck: {fileID: 1741014367}
+  wallCheck: {fileID: 471195930}
   wallCheckDistance: 0.99
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  attackDistance: 1.5
+  attackCooldown: 0.5
+  lastTimeAttacked: 0
   moveSpeed: 3
   idleTime: 1.5
+  battleTime: 3
+  canSeePlayerAtDistance: 18.5
+  drawFildOfView: 1
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!70 &1741014369
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -12102,7 +12156,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1977537066}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12118,7 +12172,7 @@ Transform:
   m_GameObject: {fileID: 1977537065}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.373, y: -0.987, z: 0}
+  m_LocalPosition: {x: 0.515, y: -0.987, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12305,7 +12359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2129009257}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
