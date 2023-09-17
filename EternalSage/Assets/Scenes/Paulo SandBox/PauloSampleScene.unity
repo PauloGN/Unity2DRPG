@@ -603,6 +603,7 @@ Transform:
   - {fileID: 1013518869}
   - {fileID: 2129009257}
   - {fileID: 804674237}
+  - {fileID: 1708501990}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &628312160
@@ -617,6 +618,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7612dcae23c114a8a966a61b43b436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackCheck: {fileID: 1708501990}
+  attackRadius: 0.8
   groundCheck: {fileID: 2129009257}
   groundCheckDistance: 0.55
   wallCheck: {fileID: 804674237}
@@ -728,6 +731,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 628312159}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &838973335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 838973336}
+  m_Layer: 7
+  m_Name: attackCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &838973336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838973335}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.94, y: -0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1741014367}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1013518868
 GameObject:
@@ -3351,6 +3385,37 @@ Transform:
   - {fileID: 2127010655}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1708501989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1708501990}
+  m_Layer: 6
+  m_Name: AttackCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1708501990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708501989}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.27, y: -0.17, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 628312159}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1741014366
 GameObject:
   m_ObjectHideFlags: 0
@@ -3386,6 +3451,7 @@ Transform:
   - {fileID: 460856725}
   - {fileID: 1977537066}
   - {fileID: 471195930}
+  - {fileID: 838973336}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1741014368
@@ -3400,6 +3466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5cadc8749bed124e9daca3e5a806842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackCheck: {fileID: 838973336}
+  attackRadius: 0.7
   groundCheck: {fileID: 1977537066}
   groundCheckDistance: 0.49
   wallCheck: {fileID: 471195930}
@@ -3415,6 +3483,8 @@ MonoBehaviour:
   battleTime: 3
   canSeePlayerAtDistance: 18.5
   drawFildOfView: 1
+  distanceToForgetPlayer: 7
+  playerDetectionDistance: 2
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64

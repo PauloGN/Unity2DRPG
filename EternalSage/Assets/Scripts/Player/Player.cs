@@ -7,6 +7,7 @@ public class Player : Entity
 {
     [Header("Attack details")]
     public Vector2[] attackMovement;
+
     [Header("Move info")]
     public float moveSpeed = 12.0f;
     public float jumpForce = 12.0f;

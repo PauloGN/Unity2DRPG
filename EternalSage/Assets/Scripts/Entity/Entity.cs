@@ -5,6 +5,8 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     [Header("Collision Sensors")]
+    public Transform attackCheck;
+    public float attackRadius;
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected float groundCheckDistance;
     [SerializeField] protected Transform wallCheck;
@@ -36,6 +38,11 @@ public class Entity : MonoBehaviour
 
     }
 
+    public virtual void TakeDamage()
+    {
+        Debug.Log("Damage...");
+    }
+
     #region Collision
 
     public virtual bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
@@ -52,6 +59,9 @@ public class Entity : MonoBehaviour
         float xwallCheck = wallCheck.position.x + wallCheckDistance * facingDir;
         float ywallCheck = wallCheck.position.y;
         Gizmos.DrawLine(wallCheck.position, new Vector2(xwallCheck, ywallCheck));
+        //WireSphere
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(attackCheck.position, attackRadius);
     }
     #endregion
 
@@ -64,8 +74,6 @@ public class Entity : MonoBehaviour
         FlipController(xVelocity);
     }
     #endregion
-
-
     #region Flip
     public void Flip()
     {
