@@ -18,6 +18,9 @@ public class Enemy : Entity
     public float distanceToForgetPlayer = 7.0f;
     public float playerDetectionDistance = 2.0f;
     [SerializeField]protected LayerMask whatIsPlayer;
+    [Header("Stunned Info")]
+    public float stunDuration = 1.0f;
+    public Vector2 stunDirection = Vector2.zero;
 
     public EnemyStateMachine stateMachine {get; private set;}
 
@@ -25,7 +28,6 @@ public class Enemy : Entity
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
-
     }
 
     // Start is called before the first frame update
@@ -60,7 +62,6 @@ public class Enemy : Entity
             //Attack line
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + attackDistance * facingDir, transform.position.y));
-
         }
     }
 }

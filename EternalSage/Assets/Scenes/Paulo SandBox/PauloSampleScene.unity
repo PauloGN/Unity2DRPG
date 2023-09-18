@@ -628,6 +628,8 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  knockbackForce: {x: 0, y: 0}
+  knockbackDuration: 0.2
   attackMovement:
   - {x: 2, y: 2}
   - {x: 1, y: 3}
@@ -3441,9 +3443,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1741014367}
   - component: {fileID: 1741014368}
+  - component: {fileID: 1741014371}
   - component: {fileID: 1741014370}
   - component: {fileID: 1741014369}
-  - component: {fileID: 1741014371}
   m_Layer: 7
   m_Name: EnemySkeleton
   m_TagString: Untagged
@@ -3491,6 +3493,8 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  knockbackForce: {x: 7, y: 2}
+  knockbackDuration: 0.2
   attackDistance: 1.5
   attackCooldown: 0.5
   lastTimeAttacked: 0
@@ -3504,6 +3508,8 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  stunDuration: 1
+  stunDirection: {x: 5, y: 2}
 --- !u!70 &1741014369
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -12486,8 +12492,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 2125799567}
-  - {fileID: 628312159}
-  - {fileID: 1578851484}
   - {fileID: 1696543715}
+  - {fileID: 2125799567}
+  - {fileID: 1578851484}
+  - {fileID: 628312159}
   - {fileID: 1741014367}

@@ -13,9 +13,15 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float wallCheckDistance;
     [SerializeField] protected LayerMask whatIsGround;
 
+    [Header("Knockback info")]
+    [SerializeField] protected Vector2 knockbackForce;
+    [SerializeField] protected float knockbackDuration = .2f;
+
+
     //controllers
     public int facingDir { get; private set; } = 1;
     protected bool facingRight = true;
+    protected bool isKnocked = false;
 
     #region Components
     public Animator anim { get; private set; }
@@ -45,8 +51,17 @@ public class Entity : MonoBehaviour
         if(fX != null)
         {
             fX.StartCoroutine("FlashFX");
+            StartCoroutine("HitKnockback");
         }
         Debug.Log("Damage...");
+    }
+
+    protected virtual IEnumerator HitKnockback()
+    {
+        isKnocked = true;
+        rb.velocity = new Vector2(knockbackForce.x * -facingDir, knockbackForce.y);
+        yield return new WaitForSeconds(knockbackDuration);
+        isKnocked = false;
     }
 
     #region Collision
@@ -70,12 +85,18 @@ public class Entity : MonoBehaviour
         Gizmos.DrawWireSphere(attackCheck.position, attackRadius);
     }
     #endregion
-
     #region Velocity
-    public void SetZeroVelocity() => rb.velocity = Vector2.zero;
+    public void SetZeroVelocity()
+    {
+        if (isKnocked) { return; }
+
+        rb.velocity = Vector2.zero;
+    }
 
     public void SetVelocity(float xVelocity, float yVelocity)
     {
+        if (isKnocked) { return; }
+
         rb.velocity = new Vector2(xVelocity, yVelocity);
         FlipController(xVelocity);
     }
