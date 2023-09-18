@@ -21,20 +21,19 @@ public class PlayerPrimaryAttackState : PlayerState
             comboCounter = 0;
         }
 
-        playerRef.anim.SetInteger("ComboCounter", comboCounter);
-
+        //For some reason xInput is delayded then I am geting the value in the moment it enter in attack state.
         #region Attack Direction
+        float inputX = Input.GetAxisRaw("Horizontal");
         float attackDir = playerRef.facingDir;
-        if(xInput != 0)
+        if(inputX != 0 && inputX != attackDir)
         {
-            attackDir = xInput;
+            attackDir = inputX;
         }
         #endregion
+        playerRef.anim.SetInteger("ComboCounter", comboCounter);
 
 
         playerRef.SetVelocity(playerRef.attackMovement[comboCounter].x * attackDir, playerRef.attackMovement[comboCounter].y );
-
-
         stateTimer = .1f;
     }
 

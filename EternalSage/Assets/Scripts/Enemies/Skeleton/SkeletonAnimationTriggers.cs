@@ -23,7 +23,5 @@ public class SkeletonAnimationTriggers : MonoBehaviour
                 player.TakeDamage();
             }
         }
-
     }
-
 }
