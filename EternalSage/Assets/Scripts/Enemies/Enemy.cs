@@ -19,8 +19,10 @@ public class Enemy : Entity
     public float playerDetectionDistance = 2.0f;
     [SerializeField]protected LayerMask whatIsPlayer;
     [Header("Stunned Info")]
+    [SerializeField] protected GameObject counterImage;
     public float stunDuration = 1.0f;
     public Vector2 stunDirection = Vector2.zero;
+    protected bool canBeStunned;
 
     public EnemyStateMachine stateMachine {get; private set;}
 
@@ -41,6 +43,30 @@ public class Enemy : Entity
     {
         base.Update();
         stateMachine.currentState.Update();
+    }
+
+
+    public virtual void OpenCounterAttackwindow()
+    {
+        canBeStunned = true;
+        counterImage.SetActive(true);
+    }
+
+    public virtual void CloseCounterAttackwindow()
+    {
+        canBeStunned = false;
+        counterImage.SetActive(false);
+    }
+
+    public virtual bool CanBaStunned()
+    {
+        if (canBeStunned)
+        {
+            CloseCounterAttackwindow();
+            return true;
+        }
+
+        return false;
     }
 
     public virtual void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();

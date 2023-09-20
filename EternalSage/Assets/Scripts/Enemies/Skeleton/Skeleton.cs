@@ -37,10 +37,15 @@ public class Skeleton : Enemy
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.F))
+    }
+
+    public override bool CanBaStunned()
+    {
+        if (base.CanBaStunned())
         {
             stateMachine.ChangeState(skStunnedState);
+            return true;
         }
-
+        return false;
     }
 }

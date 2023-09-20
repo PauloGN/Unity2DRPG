@@ -7,6 +7,7 @@ public class Player : Entity
 {
     [Header("Attack details")]
     public Vector2[] attackMovement;
+    public float counterAttackdurationTime = 0.2f;
 
     [Header("Move info")]
     public float moveSpeed = 12.0f;
@@ -18,8 +19,6 @@ public class Player : Entity
     public float slideControl = 0.5f;
     [Header("Dash info")]
     [Space]
-    [SerializeField] float dashCoolDown = 3.0f;
-    private float dashTimerUsage = 0.0f;
     public float dashSpeed = 25.0f;
     public float dashDuration = .5f;
     public float dashDir { get; private set; } = 1;
@@ -39,6 +38,14 @@ public class Player : Entity
 
     //Attack
     public PlayerPrimaryAttackState primaryAttack { get; private set;}
+    public PlayerCounterAttackState counterAttack { get; private set;}
+
+    #endregion
+
+
+    #region Components
+
+    public SkillManager skill {get; private set;}
 
     #endregion
 
@@ -56,11 +63,13 @@ public class Player : Entity
 
         //Attack
         primaryAttack = new PlayerPrimaryAttackState (this, stateMachine, "Attack");
+        counterAttack = new PlayerCounterAttackState (this, stateMachine, "CounterAttack");
     }
 
     protected override void Start()
     {
         base.Start();
+        skill = SkillManager.instance;
         stateMachine.Initialize(idleState);
     }
 
@@ -77,11 +86,9 @@ public class Player : Entity
     {
         if (IsWallDetected()) return;
 
-        dashTimerUsage -= Time.deltaTime;
-
-        if (Input.GetButtonDown("Dash") && dashTimerUsage < 0.0f)
+        if (Input.GetButtonDown("Dash") && SkillManager.instance.dash.CanUseSkill())
         {
-            dashTimerUsage = dashCoolDown;
+         
             dashDir = Input.GetAxisRaw("Horizontal");
 
             if(dashDir == 0)

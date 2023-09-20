@@ -30,6 +30,12 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachineRef.ChangeState(playerRef.airState);
         }
+
+        if (Input.GetButtonDown("CounterAttackAction"))
+        {
+            stateMachineRef.ChangeState(playerRef.counterAttack);
+        }
+
     }
 
     #region INPUTS
@@ -51,8 +57,6 @@ public class PlayerGroundedState : PlayerState
 
     #endregion
 }
-
-
 
 //INPUTS
 /*

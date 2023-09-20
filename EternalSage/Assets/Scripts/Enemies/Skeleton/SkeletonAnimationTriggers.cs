@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SkeletonAnimationTriggers : MonoBehaviour
 {
-    Skeleton Skeleton => GetComponentInParent<Skeleton>();
+    Skeleton skEnemy => GetComponentInParent<Skeleton>();
 
     private void AnimationTrigger()
     {
-        Skeleton.AnimationFinishTrigger();
+        skEnemy.AnimationFinishTrigger();
     }
 
     private void AttackTrigger()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(Skeleton.attackCheck.position, Skeleton.attackRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(skEnemy.attackCheck.position, skEnemy.attackRadius);
 
         foreach (Collider2D collider in colliders)
         {
@@ -24,4 +24,11 @@ public class SkeletonAnimationTriggers : MonoBehaviour
             }
         }
     }
+
+    //Functions called in animation attack time line
+    #region Counter Attack settings
+    private void OpenCounterWindow()=> skEnemy.OpenCounterAttackwindow();
+    private void CloseCounterWindow()=> skEnemy.CloseCounterAttackwindow();
+    #endregion
+
 }

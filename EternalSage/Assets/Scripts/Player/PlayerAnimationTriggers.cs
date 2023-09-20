@@ -22,6 +22,5 @@ public class PlayerAnimationTriggers : MonoBehaviour
                 enemy.TakeDamage();
             }
         }
-
     }
 }

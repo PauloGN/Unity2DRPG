@@ -12,7 +12,7 @@ public class PlayerState
     private string animBoolName;
 
     protected float stateTimer;
-    protected bool triggerCalled;//used to controll attack states
+    protected bool triggerCalled;//used to controll end of state on animation time line
 
     public PlayerState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName)
     {
@@ -43,7 +43,6 @@ public class PlayerState
 
     public virtual void AnimationFinishTrigger()
     {
-        triggerCalled = true;
+       triggerCalled = true;
     }
-
 }
