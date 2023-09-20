@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ColorLoosingSpeed: 1
   attackCheck: {fileID: 1090220557496876744}
-  attackRadius: 0.8
+  attackRadius: 1.2
 --- !u!1 &630384059345091523
 GameObject:
   m_ObjectHideFlags: 0

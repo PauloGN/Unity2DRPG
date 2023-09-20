@@ -31,10 +31,7 @@ public class PlayerGroundedState : PlayerState
             stateMachineRef.ChangeState(playerRef.airState);
         }
 
-        if (Input.GetButtonDown("CounterAttackAction"))
-        {
-            stateMachineRef.ChangeState(playerRef.counterAttack);
-        }
+
 
     }
 
@@ -52,6 +49,16 @@ public class PlayerGroundedState : PlayerState
         if (Input.GetButtonDown("Attack") && playerRef.IsGroundDetected())
         {
             stateMachineRef.ChangeState(playerRef.primaryAttack);
+        }
+
+        if (Input.GetButtonDown("CounterAttackAction"))
+        {
+            stateMachineRef.ChangeState(playerRef.counterAttack);
+        }
+
+        if (Input.GetButtonDown("AimSw"))
+        {
+            stateMachineRef.ChangeState(playerRef.aimSword);
         }
     }
 
