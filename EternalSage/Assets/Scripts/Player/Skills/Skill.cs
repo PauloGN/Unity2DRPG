@@ -8,6 +8,13 @@ public class Skill : MonoBehaviour
     [Header("Skill info")]
     [SerializeField] protected float cooldown;
     protected float cooldownTimer;
+    protected Player player;
+
+    protected virtual void Start()
+    {
+        player = PlayerManager.instance.player;
+    }
+
 
     protected virtual void Update()
     {

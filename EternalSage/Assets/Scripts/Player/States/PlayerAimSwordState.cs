@@ -11,11 +11,15 @@ public class PlayerAimSwordState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        playerRef.skill.sword.DotsActive(true);
+
     }
 
     public override void Exit()
     {
         base.Exit();
+        playerRef.skill.sword.ResetCrosshairPosition();
     }
 
     public override void Update()
