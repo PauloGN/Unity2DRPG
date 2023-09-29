@@ -56,14 +56,26 @@ public class PlayerGroundedState : PlayerState
             stateMachineRef.ChangeState(playerRef.counterAttack);
         }
 
-        if (Input.GetButtonDown("AimSw"))
+        //player is aiming and does not have sword assigned
+        if (Input.GetButtonDown("AimSw") && HasNoSword())
         {
             stateMachineRef.ChangeState(playerRef.aimSword);
         }
     }
 
     #endregion
+    private bool HasNoSword()
+    {
+        if (!playerRef.sword)
+        {
+            return true;
+        }
+
+        playerRef.sword.GetComponent<SwordSkillController>().ReturnSword();
+        return false;
+    }
 }
+
 
 //INPUTS
 /*

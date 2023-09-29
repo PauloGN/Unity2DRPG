@@ -48,8 +48,9 @@ public class Player : Entity
 #region Components
 
 public SkillManager skill {get; private set;}
+    public GameObject sword { get; private set; }
 
-    #endregion
+#endregion
 
     protected override void Awake ()
     {
@@ -112,5 +113,16 @@ public SkillManager skill {get; private set;}
     }
 
     public void AnimationTrigger() => stateMachine.currenState.AnimationFinishTrigger();
+
+    //Assign and clear sword
+    public void AssignNewSword(GameObject newSword)
+    {
+        sword = newSword;
+    }
+
+    public void ClearSword()
+    {
+        Destroy(sword);
+    }
 
 }
