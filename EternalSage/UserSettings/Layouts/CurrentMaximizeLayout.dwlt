@@ -25,7 +25,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 10425
+  controlID: 12940
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 10426
+  controlID: 12824
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -855,7 +855,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 27416
+  m_LastSelectedObjectID: 27486
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -880,7 +880,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 10489
+  controlID: 12887
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1024,8 +1024,8 @@ MonoBehaviour:
     y: 672
     width: 679
     height: 627
-  m_MinSize: {x: 232, y: 271}
-  m_MaxSize: {x: 10002, y: 10021}
+  m_MinSize: {x: 230, y: 250}
+  m_MaxSize: {x: 10000, y: 10000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -1076,7 +1076,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Player
+    - Assets/Scripts/Environment
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1084,15 +1084,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Scripts/Player
+  - Assets/Scripts/Environment
   m_LastFoldersGridSize: 96
   m_LastProjectPath: E:\Unity Projects\2D\Unity2DRPG\EternalSage
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 386f0000
-    m_LastClickedID: 28472
+    m_SelectedIDs: 706f0000
+    m_LastClickedID: 28528
     m_ExpandedIDs: 00000000366f0000386f00003a6f00003c6f00003e6f0000406f0000426f0000446f0000466f0000486f00004a6f00004c6f00004e6f0000506f0000526f00006e6f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1146,8 +1146,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 186b0000
-    m_LastClickedInstanceID: 27416
+    m_SelectedInstanceIDs: 5e6b0000
+    m_LastClickedInstanceID: 27486
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 6a660000c0600000e6600000e860000004760000fe760000d0600000206100002e64000012620000506c0000908c0000446d0000406c00002a830000a88000004a6c0000c28e0000
     m_RenameOverlay:
@@ -1243,7 +1243,7 @@ MonoBehaviour:
     m_CachedPref: -476
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 27416
+  m_LastInspectedObjectInstanceID: 27486
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

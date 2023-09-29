@@ -14,6 +14,7 @@ public class PlayerAimSwordState : PlayerState
 
         playerRef.skill.sword.ResetCrosshairPosition();
         playerRef.skill.sword.DotsActive(true);
+        playerRef.SetZeroVelocity();
 
     }
 
@@ -25,10 +26,22 @@ public class PlayerAimSwordState : PlayerState
     public override void Update()
     {
         base.Update();
-
+        playerRef.SetZeroVelocity();
         if (Input.GetButtonUp("AimSw"))
         {
             stateMachineRef.ChangeState(playerRef.idleState);
+        }
+
+        Vector2 AimPosition = playerRef.skill.sword.GetCrosshairPos();
+
+        if(playerRef.transform.position.x > AimPosition.x && playerRef.facingDir == 1)
+        {
+            playerRef.Flip();
+        }
+        else if (playerRef.transform.position.x < AimPosition.x && playerRef.facingDir == -1)
+        {
+            playerRef.Flip();
+
         }
 
     }

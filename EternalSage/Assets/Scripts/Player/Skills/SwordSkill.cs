@@ -29,12 +29,12 @@ public class SwordSkill : Skill
 
     protected override void Update()
     {
-        if(crosshair!= null && crosshair.IsAiming()) 
+        if (crosshair != null && crosshair.IsAiming())
         {
             Vector2 normalDir = AimDirection();
             finalDir = new Vector2(normalDir.x * launchForce.x, normalDir.y * launchForce.y);
 
-            for(int i = 0; i < dots.Length; i++) 
+            for (int i = 0; i < dots.Length; i++)
             {
                 dots[i].transform.position = DotsPosition(i * spaceBetweeenDots);
             }
@@ -62,7 +62,7 @@ public class SwordSkill : Skill
         }
 
         //Return a vector2 wich is the direction
-        return(finalPosition - playerPosition).normalized;
+        return (finalPosition - playerPosition).normalized;
     }
 
     public void DotsActive(bool _active)
@@ -77,16 +77,16 @@ public class SwordSkill : Skill
     private void GenerateDots()
     {
         dots = new GameObject[numberOfDots];
-        for(int i = 0; i < numberOfDots; i++)
+        for (int i = 0; i < numberOfDots; i++)
         {
-            dots[i] = Instantiate(dotPrefab, player.transform.position,Quaternion.identity, dotParent);
+            dots[i] = Instantiate(dotPrefab, player.transform.position, Quaternion.identity, dotParent);
             dots[i].SetActive(false);
         }
     }
 
     private Vector2 DotsPosition(float t)
     {
-        Vector2 normalDir = AimDirection(); 
+        Vector2 normalDir = AimDirection();
         Vector2 position = (Vector2)player.transform.position +
                             new Vector2(normalDir.x * launchForce.x, normalDir.y * launchForce.y) *
                             t + .5f * (Physics2D.gravity * swordGravity) * (t * t);
@@ -96,6 +96,12 @@ public class SwordSkill : Skill
 
     public void ResetCrosshairPosition()
     {
-        crosshair.transform.position = new Vector2(player.transform.position.x + 2 * player.facingDir , player.transform.position.y);
+        crosshair.transform.position = new Vector2(player.transform.position.x + 2 * player.facingDir, player.transform.position.y);
     }
+
+    public Vector2 GetCrosshairPos()
+    {
+        return crosshair.transform.position;
+    } 
+
 }
