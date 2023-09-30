@@ -37,8 +37,9 @@ public class SwordSkillController : MonoBehaviour
 
     public void ReturnSword()
     {
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         isReturning = true;
-        rb.isKinematic = false;
+       // rb.isKinematic = false;
         transform.parent = null;
 
     }
@@ -55,13 +56,15 @@ public class SwordSkillController : MonoBehaviour
 
             if(Vector2.Distance(transform.position, player.transform.position) <= 0.9f)
             {
-                player.ClearSword();
+                player.CatchSword();
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isReturning) { return; }
+
         anim.SetBool("Rotation", false);
 
         canRotate = false;
@@ -71,7 +74,5 @@ public class SwordSkillController : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
         transform.parent = collision.transform;
-
     }
-
 }

@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sword
       objectReference: {fileID: 0}
+    - target: {fileID: 5490263424107948017, guid: f70fd7fb7db970c40b4bdcab60e4e918, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7957306880406361731, guid: f70fd7fb7db970c40b4bdcab60e4e918, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.49
@@ -785,6 +789,7 @@ MonoBehaviour:
   xJumpForce: 6
   airControl: 0.582
   slideControl: 0.69
+  swordReturnImpact: 8
   dashSpeed: 25
   dashDuration: 0.5
 --- !u!50 &628312161

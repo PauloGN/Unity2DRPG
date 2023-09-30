@@ -21,6 +21,8 @@ public class PlayerAimSwordState : PlayerState
     public override void Exit()
     {
         base.Exit();
+
+        playerRef.StartCoroutine("BusyFor", .2f);
     }
 
     public override void Update()
@@ -41,7 +43,6 @@ public class PlayerAimSwordState : PlayerState
         else if (playerRef.transform.position.x < AimPosition.x && playerRef.facingDir == -1)
         {
             playerRef.Flip();
-
         }
 
     }

@@ -17,6 +17,7 @@ public class Player : Entity
     public float airControl = 0.5f;
     [Range(0.0f, 1.0f)]
     public float slideControl = 0.5f;
+    public float swordReturnImpact = 8.0f;
     [Header("Dash info")]
     [Space]
     public float dashSpeed = 25.0f;
@@ -120,8 +121,9 @@ public SkillManager skill {get; private set;}
         sword = newSword;
     }
 
-    public void ClearSword()
+    public void CatchSword()
     {
+        stateMachine.ChangeState(catchSword);
         Destroy(sword);
     }
 
