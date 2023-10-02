@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -15,8 +16,11 @@ public class SwordSkill : Skill
     public SwordType swordType = SwordType.Regular;
 
     [Header("Bounce info")]
-    [SerializeField] private int amountOfBounce;
+    [SerializeField] private int bounceAmount;
     [SerializeField] private float bounceGravity;
+    [Header("Pierce info")]
+    [SerializeField] private int pierceAmount;
+    [SerializeField] private float pierceGravity;
     [Header("Skill info")]
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 launchForce;
@@ -57,6 +61,9 @@ public class SwordSkill : Skill
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         SwordSkillController newSwordScript = newSword.GetComponent<SwordSkillController>();
 
+        //in general swrod gravity is gonna be the same for all.
+        swordGravity = pierceGravity;
+
         switch (swordType)
         {
             case SwordType.Regular:
@@ -64,10 +71,13 @@ public class SwordSkill : Skill
             case SwordType.Bounce:
                 {
                     swordGravity = bounceGravity;
-                    newSwordScript.SetupBounce(true, amountOfBounce);
+                    newSwordScript.SetupBounce(true, bounceAmount);
                 }
                 break;
             case SwordType.Pierce:
+
+                newSwordScript.SetupPierce(pierceAmount);
+
                 break;
             case SwordType.Spin:
                 break;
