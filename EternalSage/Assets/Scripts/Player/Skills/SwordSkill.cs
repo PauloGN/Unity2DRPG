@@ -21,6 +21,11 @@ public class SwordSkill : Skill
     [Header("Pierce info")]
     [SerializeField] private int pierceAmount;
     [SerializeField] private float pierceGravity;
+    [Header("Spin info")]
+    [SerializeField] private float hitCooldown = .35f;
+    [SerializeField] private float maxTravelDistance = 7.0f;
+    [SerializeField] private float spinDuration = 2.0f;
+    [SerializeField] private float spinGravity = 1.0f;
     [Header("Skill info")]
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 launchForce;
@@ -61,9 +66,6 @@ public class SwordSkill : Skill
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         SwordSkillController newSwordScript = newSword.GetComponent<SwordSkillController>();
 
-        //in general swrod gravity is gonna be the same for all.
-        swordGravity = pierceGravity;
-
         switch (swordType)
         {
             case SwordType.Regular:
@@ -75,11 +77,16 @@ public class SwordSkill : Skill
                 }
                 break;
             case SwordType.Pierce:
-
-                newSwordScript.SetupPierce(pierceAmount);
-
+                {
+                    swordGravity = pierceGravity;
+                    newSwordScript.SetupPierce(pierceAmount);
+                }
                 break;
             case SwordType.Spin:
+                {
+                    swordGravity = spinGravity;
+                    newSwordScript.SetupSpin(true, maxTravelDistance, spinDuration, hitCooldown);
+                }
                 break;
             default:
                 break;
