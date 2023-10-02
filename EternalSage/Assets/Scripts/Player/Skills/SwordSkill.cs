@@ -1,9 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+
+public enum SwordType
+{
+    Regular,
+    Bounce,
+    Pierce,
+    Spin
+}
 
 public class SwordSkill : Skill
 {
+
+    public SwordType swordType = SwordType.Regular;
+
+    [Header("Bounce info")]
+    [SerializeField] private int amountOfBounce;
+    [SerializeField] private float bounceGravity;
     [Header("Skill info")]
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 launchForce;
@@ -15,10 +28,8 @@ public class SwordSkill : Skill
     [SerializeField] private GameObject dotPrefab;
     [SerializeField] private Transform dotParent;
 
-
     private Vector2 finalDir;
     private GameObject[] dots;
-
 
     protected override void Start()
     {
@@ -46,11 +57,31 @@ public class SwordSkill : Skill
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         SwordSkillController newSwordScript = newSword.GetComponent<SwordSkillController>();
 
+        switch (swordType)
+        {
+            case SwordType.Regular:
+                break;
+            case SwordType.Bounce:
+                {
+                    swordGravity = bounceGravity;
+                    newSwordScript.SetupBounce(true, amountOfBounce);
+                }
+                break;
+            case SwordType.Pierce:
+                break;
+            case SwordType.Spin:
+                break;
+            default:
+                break;
+        }
+
         newSwordScript.SetupSword(finalDir, swordGravity, player);
 
         player.AssignNewSword(newSword);
         DotsActive(false);
     }
+
+    #region Aim Region
 
     public Vector2 AimDirection()
     {
@@ -102,6 +133,6 @@ public class SwordSkill : Skill
     public Vector2 GetCrosshairPos()
     {
         return crosshair.transform.position;
-    } 
-
+    }
+    #endregion
 }

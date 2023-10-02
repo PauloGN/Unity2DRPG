@@ -17,13 +17,12 @@ public class SwordSkillController : MonoBehaviour
     private bool canRotate = true;
     private bool isReturning;
     //skill bouncing
-    public float bounceSpeed = 20.0f;
-    public bool isBouncing = true;
-    public int amountOfBounce = 4;
-    public List<Transform> EnemyTargetList;
+    [Header("Bounce Info")]
+    [SerializeField] private float bounceSpeed = 20.0f;
+    private List<Transform> EnemyTargetList;
+    private bool isBouncing;
+    private int amountOfBounce;
     private int targetIndex;
-
-
 
     private void Awake()
     {
@@ -39,7 +38,6 @@ public class SwordSkillController : MonoBehaviour
         rb.gravityScale = gravityScale;
 
         anim.SetBool("Rotation", true);
-
     }
 
     public void ReturnSword()
@@ -61,12 +59,17 @@ public class SwordSkillController : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, returningSpeed * Time.deltaTime);
 
-            if(Vector2.Distance(transform.position, player.transform.position) <= 0.9f)
+            if (Vector2.Distance(transform.position, player.transform.position) <= 0.9f)
             {
                 player.CatchSword();
             }
         }
 
+        BounceLogic();
+    }
+
+    private void BounceLogic()
+    {
         if (isBouncing && EnemyTargetList.Count > 0)
         {
             transform.position = Vector2.MoveTowards(transform.position, EnemyTargetList[targetIndex].position, bounceSpeed * Time.deltaTime);
@@ -76,7 +79,7 @@ public class SwordSkillController : MonoBehaviour
                 targetIndex++;
                 amountOfBounce--;
 
-                if(amountOfBounce <= 0)
+                if (amountOfBounce <= 0)
                 {
                     isBouncing = false;
                     isReturning = true;
@@ -129,4 +132,13 @@ public class SwordSkillController : MonoBehaviour
         anim.SetBool("Rotation", false);
         transform.parent = collision.transform;
     }
+
+    public void SetupBounce(bool _isBouncing, int _amountOfBounces)
+    {
+        EnemyTargetList = new  List<Transform>();
+
+        isBouncing = _isBouncing;
+        amountOfBounce = _amountOfBounces;    
+    }
+
 }
