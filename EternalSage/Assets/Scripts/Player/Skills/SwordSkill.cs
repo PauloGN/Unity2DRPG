@@ -15,9 +15,18 @@ public class SwordSkill : Skill
 
     public SwordType swordType = SwordType.Regular;
 
+    [Header("Skill info")]
+    [SerializeField] private GameObject swordPrefab;
+    [SerializeField] private Vector2 launchForce;
+    [SerializeField] private float swordGravity;
+    [SerializeField] float freezeTimeDuration;
+    [SerializeField] float returnSpeed;
+    [SerializeField] AimController crosshair;
     [Header("Bounce info")]
     [SerializeField] private int bounceAmount;
     [SerializeField] private float bounceGravity;
+    [SerializeField] private float bounceSpeed;
+
     [Header("Pierce info")]
     [SerializeField] private int pierceAmount;
     [SerializeField] private float pierceGravity;
@@ -26,11 +35,6 @@ public class SwordSkill : Skill
     [SerializeField] private float maxTravelDistance = 7.0f;
     [SerializeField] private float spinDuration = 2.0f;
     [SerializeField] private float spinGravity = 1.0f;
-    [Header("Skill info")]
-    [SerializeField] private GameObject swordPrefab;
-    [SerializeField] private Vector2 launchForce;
-    [SerializeField] private float swordGravity;
-    [SerializeField] AimController crosshair;
     [Header("Aim dots")]
     [SerializeField] private int numberOfDots;
     [SerializeField] private float spaceBetweeenDots;
@@ -69,11 +73,12 @@ public class SwordSkill : Skill
         switch (swordType)
         {
             case SwordType.Regular:
+                swordGravity = .5f;
                 break;
             case SwordType.Bounce:
                 {
                     swordGravity = bounceGravity;
-                    newSwordScript.SetupBounce(true, bounceAmount);
+                    newSwordScript.SetupBounce(true, bounceAmount, bounceSpeed);
                 }
                 break;
             case SwordType.Pierce:
@@ -92,7 +97,7 @@ public class SwordSkill : Skill
                 break;
         }
 
-        newSwordScript.SetupSword(finalDir, swordGravity, player);
+        newSwordScript.SetupSword(finalDir, swordGravity, player, freezeTimeDuration, returnSpeed);
 
         player.AssignNewSword(newSword);
         DotsActive(false);

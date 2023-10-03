@@ -26,10 +26,14 @@ public class Enemy : Entity
 
     public EnemyStateMachine stateMachine {get; private set;}
 
+    //controller
+    private float defaultMoveSpeed;
+
     protected override void Awake()
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
+        defaultMoveSpeed = moveSpeed;
     }
 
     // Start is called before the first frame update
@@ -45,7 +49,29 @@ public class Enemy : Entity
         stateMachine.currentState.Update();
     }
 
+    //Timer Controller
+    public virtual void FreezeTime(bool _timeFrozen)
+    {
+        if (_timeFrozen)
+        {
+            moveSpeed = 0.0f;
+            anim.speed = 0.0f;
+        }
+        else
+        {
+            moveSpeed = defaultMoveSpeed;
+            anim.speed = 1.0f;
+        }
+    }
 
+    protected virtual IEnumerator FreezeTimeFor(float _seconds)
+    {
+        FreezeTime(true);
+        yield return new WaitForSeconds(_seconds);
+        FreezeTime(false);
+    }
+
+    #region Counter Attack window
     public virtual void OpenCounterAttackwindow()
     {
         canBeStunned = true;
@@ -57,8 +83,8 @@ public class Enemy : Entity
         canBeStunned = false;
         counterImage.SetActive(false);
     }
-
-    public virtual bool CanBaStunned()
+    #endregion
+    public virtual bool CanBeStunned()
     {
         if (canBeStunned)
         {

@@ -180,11 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f30170ca507a9b4fae7aa4d029c7529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  returningSpeed: 12
+  returningSpeed: 22
   bounceSpeed: 20
-  isBouncing: 1
-  amountOfBounce: 4
-  EnemyTargetList: []
 --- !u!70 &1977207576430946339
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

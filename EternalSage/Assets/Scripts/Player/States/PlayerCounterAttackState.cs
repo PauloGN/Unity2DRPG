@@ -32,7 +32,7 @@ public class PlayerCounterAttackState : PlayerState
             var enemy = collider.GetComponent<Enemy>();
             if (enemy != null)
             {
-                if (enemy.CanBaStunned())
+                if (enemy.CanBeStunned())
                 {
                     stateTimer = 10.0f;// any value biger than 1 it just need to last more before exiting state
                     playerRef.anim.SetBool("SuccessfulCounterAttack", true);
