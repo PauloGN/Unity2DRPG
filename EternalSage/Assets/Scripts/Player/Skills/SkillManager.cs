@@ -34,4 +34,22 @@ public class SkillManager : MonoBehaviour
             instance = this;
         }
     }
+
+    public bool IsJoystickConnected()
+    {
+        // Get the current joystick names
+        string[] currentJoystickNames = Input.GetJoystickNames();
+
+        // Compare the length of the arrays to detect changes in connected devices
+        if (currentJoystickNames.Length > 0 && currentJoystickNames[0] != "")
+        {
+            // A new joystick was connected
+            Debug.Log("Joystick connected");
+            return true;
+        }
+
+            // A joystick was disconnected
+            Debug.Log("Joystick disconnected");
+            return false;
+    }
 }

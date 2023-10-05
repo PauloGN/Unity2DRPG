@@ -30,9 +30,6 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachineRef.ChangeState(playerRef.airState);
         }
-
-
-
     }
 
     #region INPUTS
@@ -93,4 +90,13 @@ public class PlayerGroundedState : PlayerState
     Joystick Button 11: Analagico Direito (pressionar)
     Joystick Button 12: Touchpad (se pressionado)
     Joystick Button 13: Botao PlayStation (PS)
+
+    Axis mappings:
+    - Left Stick Horizontal = joystick axis 1
+    - Left Stick Vertical = joystick axis 2
+    - Right Stick Horizontal = joystick axis 3
+    - Right Stick Vertical = joystick axis 4
+    - D-Pad Horizontal = joystick axis 6
+    - D-Pad Vertical = joystick axis 7
+
  */

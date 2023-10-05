@@ -12,8 +12,6 @@ public class BlackHoleHotKeyController : MonoBehaviour
     private Transform myEnemy;
     private BlackholeSkillController blackhole;
 
-
-
     public void SetupHotKey(KeyCode _myHotkey, Transform _myEnemy, BlackholeSkillController _blackholeSkillController)
     {
         sr = GetComponent<SpriteRenderer>();
@@ -22,13 +20,17 @@ public class BlackHoleHotKeyController : MonoBehaviour
         blackhole = _blackholeSkillController;
 
         myHotkey = _myHotkey;
-        myText.text = myHotkey.ToString();    
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        bool isJoystick = SkillManager.instance.IsJoystickConnected();
+        if(isJoystick )
+        {
+            myText.text = NameOfTheKey(myHotkey);
+        }
+        else
+        {
+            myText.text = myHotkey.ToString();
+        }
+
     }
 
     // Update is called once per frame
@@ -41,5 +43,45 @@ public class BlackHoleHotKeyController : MonoBehaviour
             sr.color = Color.clear;
             Debug.Log("Hot key is " + myHotkey);
         }
+    }
+
+    string NameOfTheKey(KeyCode keyTopress)
+    {
+        string name = keyTopress.ToString();
+        string returnName = "";
+
+        switch (name)
+        {
+            case "JoystickButton0":
+                returnName = "A";
+                break;
+            case "JoystickButton1":
+                returnName = "B";
+                break;
+            case "JoystickButton3":
+                returnName = "Y";
+                break;
+            case "JoystickButton2":
+                returnName = "X";
+                break;
+            case "JoystickButton4":
+                returnName = "LB";
+                break;
+            case "JoystickButton5":
+                returnName = "RB";
+                break;
+            case "JoystickButton6":
+                returnName = "LT";
+                break;
+            case "JoystickButton7":
+                returnName = "RT";
+                break;
+            default:
+                returnName = "X";
+                break;
+
+        }
+
+        return returnName;
     }
 }

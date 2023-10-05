@@ -4114,11 +4114,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotkeyPrefab: {fileID: 3656215330850584525, guid: 6843e897f5c5b09418762362b2ca5226, type: 3}
-  KeyCodeList: 1a0100001b010000
+  keyCodeList: 66000000670000007400000079000000
+  gamePadList: 4a0100004b0100004d010000
   maxSize: 15
   growSpeed: 1
+  shirnkSpeed: 3
   canGrow: 1
-  targets: []
+  canShrink: 0
+  amountOfAttacks: 4
+  cloneAttackColldown: 0.3
 --- !u!212 &1434258181
 SpriteRenderer:
   m_ObjectHideFlags: 0

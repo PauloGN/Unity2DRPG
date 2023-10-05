@@ -34,9 +34,9 @@ public class CloneSkillController : MonoBehaviour
         }
     }
 
-    public void SetupClone(Transform newTransform, float cloneDuration, bool canAttack)
+    public void SetupClone(Transform newTransform, float cloneDuration, bool canAttack, Vector3 offset)
     {
-        transform.position = newTransform.position;
+        transform.position = newTransform.position + offset;
         cloneTimer = cloneDuration;
 
         if (canAttack)
