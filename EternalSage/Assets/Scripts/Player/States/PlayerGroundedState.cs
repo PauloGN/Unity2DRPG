@@ -23,6 +23,11 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            stateMachineRef.ChangeState(playerRef.blackhole);
+        }
+
         CheckJumpInput();
         CheckAttackInput();
 
