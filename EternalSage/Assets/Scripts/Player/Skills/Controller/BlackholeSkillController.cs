@@ -22,6 +22,8 @@ public class BlackholeSkillController : MonoBehaviour
     private bool cloneAttackReleased;
     private bool canGrow = true;
     private bool canShrink;
+    private bool playerCanDesapear = true;
+
     public bool playerCanExitState { get; private set; }
 
     //Enemies info
@@ -90,7 +92,7 @@ public class BlackholeSkillController : MonoBehaviour
         if (targets == null || targets.Count <= 0)
         {
             FinishBlackholeAbility();
-            Debug.Log("BlackholeSkillController LINE 92");
+            Debug.Log("BlackholeSkillController LINE 93");
             return;
         }
 
@@ -98,7 +100,11 @@ public class BlackholeSkillController : MonoBehaviour
         cloneAttackReleased = true;
         canCreateHotkeys = false;
 
-        PlayerManager.instance.player.MakeTransparent(true);
+        if (playerCanDesapear)
+        {
+            playerCanDesapear = false;
+            PlayerManager.instance.player.MakeTransparent(true);
+        }
     }
 
     private void CloneAttackLogic()
