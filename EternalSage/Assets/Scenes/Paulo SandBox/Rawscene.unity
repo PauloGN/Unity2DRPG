@@ -802,7 +802,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5715995, y: 1.0535905, z: -9.909173}
+  m_LocalPosition: {x: -19.5616, y: 2.7735906, z: -9.909173}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -871,7 +871,7 @@ Transform:
   m_GameObject: {fileID: 628312158}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4, y: 0, z: 0.024751212}
+  m_LocalPosition: {x: -19.39, y: 1.72, z: 0.024751212}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1720,8 +1720,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 88297033
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.3018868, g: 0, b: 0, a: 1}
@@ -2101,7 +2101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
-  swordType: 1
+  swordType: 2
   swordPrefab: {fileID: 5490263424107948017, guid: f70fd7fb7db970c40b4bdcab60e4e918, type: 3}
   launchForce: {x: 25, y: 20}
   swordGravity: 1
@@ -2139,7 +2139,7 @@ MonoBehaviour:
   maxsize: 15
   growSpeed: 3
   shrinkSpeed: 6
-  amountOfAttack: 1
+  amountOfAttack: 6
   clonesAttackCooldown: 0.35
   jumpHeight: 10
 --- !u!1 &1470805994
@@ -4384,7 +4384,7 @@ Transform:
   m_GameObject: {fileID: 2125799565}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5715995, y: 1.0535905, z: -9.909173}
+  m_LocalPosition: {x: -19.5616, y: 2.7735906, z: -9.909173}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

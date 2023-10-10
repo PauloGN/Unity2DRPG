@@ -19,6 +19,4 @@ public class PlayerManager : MonoBehaviour
             instance = this;
         }
     }
-
-
 }

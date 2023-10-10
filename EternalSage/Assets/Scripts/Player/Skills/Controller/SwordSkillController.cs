@@ -231,7 +231,7 @@ public class SwordSkillController : MonoBehaviour
             return;
         }
         anim.SetBool("Rotation", false);
-        transform.parent = collision.transform;
+        transform.parent = collision.transform.parent;
     }
 
     public void SetupBounce(bool _isBouncing, int _amountOfBounces, float _bounceSpeed)
