@@ -87,6 +87,10 @@ public SkillManager skill {get; private set;}
         stateMachine.currenState.Update();
         //Inputs
         CheckInputForDash();
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            skill.crystalSkill.CanUseSkill();
+        }
         //Debug
     }
 
