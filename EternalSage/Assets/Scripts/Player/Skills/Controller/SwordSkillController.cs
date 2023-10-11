@@ -206,8 +206,8 @@ public class SwordSkillController : MonoBehaviour
 
     private void StuckInto(Collider2D collision)
     {
-
-        if (pierceAmount > 0 && collision.GetComponent<Enemy>() != null)
+        Enemy enemy = collision.GetComponent<Enemy>();
+        if (pierceAmount > 0 && enemy != null)
         {
             pierceAmount--;
             return;
@@ -231,7 +231,16 @@ public class SwordSkillController : MonoBehaviour
             return;
         }
         anim.SetBool("Rotation", false);
+
+        //if the enemy is the last obect stuck
+        if (enemy)
+        {
+            transform.parent = collision.transform;
+            return;
+        }
+
         transform.parent = collision.transform.parent;
+
     }
 
     public void SetupBounce(bool _isBouncing, int _amountOfBounces, float _bounceSpeed)

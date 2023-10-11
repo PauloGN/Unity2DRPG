@@ -2102,7 +2102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
-  swordType: 2
+  swordType: 0
   swordPrefab: {fileID: 5490263424107948017, guid: f70fd7fb7db970c40b4bdcab60e4e918, type: 3}
   launchForce: {x: 25, y: 20}
   swordGravity: 1
@@ -2112,7 +2112,7 @@ MonoBehaviour:
   bounceAmount: 5
   bounceGravity: 2
   bounceSpeed: 20
-  pierceAmount: 2
+  pierceAmount: 1
   pierceGravity: 1
   hitCooldown: 0.35
   maxTravelDistance: 7
@@ -2157,6 +2157,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0
   crystalPrefab: {fileID: 4200457827167318223, guid: 9ff6e373e86f6a142a4dcea72d3ceca4, type: 3}
+  crystalDuration: 5
+  canMoveToEnemy: 0
+  moveSpeed: 0
+  canExplode: 1
 --- !u!1 &1470805994
 GameObject:
   m_ObjectHideFlags: 0
