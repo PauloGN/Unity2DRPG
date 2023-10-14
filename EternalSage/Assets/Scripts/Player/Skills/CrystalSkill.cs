@@ -8,6 +8,7 @@ public class CrystalSkill : Skill
     [SerializeField] private GameObject crystalPrefab;
     private GameObject currentCrystal;
     [Header("Cristal info setup")]
+    [SerializeField] private bool cloneInsteadOfCrystal;
     [SerializeField] private float crystalDuration = 5.0f;
     [Header("Moving crystal")]
     [SerializeField] private bool canMoveToEnemy;
@@ -45,12 +46,18 @@ public class CrystalSkill : Skill
             }
 
             Vector2 playerPos = player.transform.position;
-
             player.transform.position = currentCrystal.transform.position;
             currentCrystal.transform.position = playerPos;
+
+            if (cloneInsteadOfCrystal)
+            {
+                SkillManager.instance.clone.CreateClone(currentCrystal.transform, Vector3.zero);
+                Destroy(currentCrystal);
+                return;
+            }
+
             currentCrystal.GetComponent<CrystalSkillController>()?.FinishCristal();
         }
-
     }
 
     private bool CanUseMultiCrystal()

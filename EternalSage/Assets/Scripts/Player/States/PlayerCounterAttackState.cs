@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
+
+    private bool canCreateClone;
+
     public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
     }
@@ -11,6 +12,7 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        canCreateClone = true;
         triggerCalled = false;
         stateTimer = playerRef.counterAttackdurationTime;
         playerRef.anim.SetBool("SuccessfulCounterAttack", false);
@@ -34,8 +36,14 @@ public class PlayerCounterAttackState : PlayerState
             {
                 if (enemy.CanBeStunned())
                 {
-                    stateTimer = 10.0f;// any value biger than 1 it just need to last more before exiting state
+                    stateTimer = 10.0f;// any value biger than 1 it just needs to last more before exiting state
                     playerRef.anim.SetBool("SuccessfulCounterAttack", true);
+
+                    if (canCreateClone)
+                    {
+                        canCreateClone = false;
+                        playerRef.skill.clone.CreateCloneOnCounterAttack(enemy.transform);
+                    }
                 }
             }
         }
