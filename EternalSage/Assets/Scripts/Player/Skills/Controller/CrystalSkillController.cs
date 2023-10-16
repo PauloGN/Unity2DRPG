@@ -15,6 +15,7 @@ public class CrystalSkillController : MonoBehaviour
     private float moveSpeed;
     private Transform closestTarget;
     [SerializeField]private float growSpeed;
+    [SerializeField] private LayerMask whatIsEnemy;
 
 
 
@@ -46,13 +47,23 @@ public class CrystalSkillController : MonoBehaviour
             }
         }
 
-
         if (canGrow)
         {
             transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(2, 2), growSpeed * Time.deltaTime);
         }
-
     }
+
+    public void ChoneRandonEnemy()
+    {
+        float radius = SkillManager.instance.blackhole.GetBlackholeRadius();
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, whatIsEnemy);
+
+        if(colliders != null && colliders.Length > 0)
+        {
+            closestTarget = colliders[Random.Range(0, colliders.Length)].transform;
+        }
+    }
+
 
     private void AnimationExplodeEvent()
     {
