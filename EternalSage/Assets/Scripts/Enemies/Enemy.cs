@@ -116,4 +116,5 @@ public class Enemy : Entity
             Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + attackDistance * facingDir, transform.position.y));
         }
     }
+
 }

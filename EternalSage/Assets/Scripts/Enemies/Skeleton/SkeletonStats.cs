@@ -2,27 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : EntityStats
+public class SkeletonStats : EnemyStats
 {
 
-    private Player player;
+    Skeleton skEnemy;
 
     protected override void Start()
     {
         base.Start();
-        player = GetComponent<Player>();
+        skEnemy = GetComponent<Skeleton>();
     }
-
     public override void TakeDamage(int _dmg)
     {
         base.TakeDamage(_dmg);
-        player.DamageEffect();
-    }
 
+    }
     protected override void Die()
     {
         base.Die();
-        player.Die();
+        skEnemy.Die();
     }
 
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public class Player : Entity
     public PlayerWallSlideState wallSlide { get; private set;}
     public PlayerDashState dashState { get; private set;}
     public PlayerWallJumpState wallJump { get; private set;}
+    public PlayerDeadState deadState { get; private set; }
 
     //Attack
     public PlayerPrimaryAttackState primaryAttack { get; private set;}
@@ -65,6 +67,7 @@ public class Player : Entity
         dashState  = new PlayerDashState(this, stateMachine, "Dash");
         wallSlide = new PlayerWallSlideState(this, stateMachine, "WallSlide");
         wallJump = new PlayerWallJumpState(this, stateMachine, "Jump");
+        deadState = new PlayerDeadState(this, stateMachine, "Die");
 
         //Attack
         primaryAttack = new PlayerPrimaryAttackState (this, stateMachine, "Attack");
@@ -131,6 +134,12 @@ public class Player : Entity
     {
         stateMachine.ChangeState(catchSword);
         Destroy(sword);
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        stateMachine.ChangeState(deadState);
     }
 
 }

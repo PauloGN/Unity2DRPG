@@ -32,5 +32,4 @@ public class SkeletonAnimationTriggers : MonoBehaviour
     private void OpenCounterWindow()=> skEnemy.OpenCounterAttackwindow();
     private void CloseCounterWindow()=> skEnemy.CloseCounterAttackwindow();
     #endregion
-
 }

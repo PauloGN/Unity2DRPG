@@ -62,8 +62,13 @@ public class Entity : MonoBehaviour
 
     protected virtual IEnumerator HitKnockback()
     {
+
+
         isKnocked = true;
-        rb.velocity = new Vector2(knockbackForce.x * -facingDir, knockbackForce.y);
+        if (rb.bodyType == RigidbodyType2D.Dynamic)
+        {
+            rb.velocity = new Vector2(knockbackForce.x * -facingDir, knockbackForce.y);
+        }
         yield return new WaitForSeconds(knockbackDuration);
         isKnocked = false;
     }
@@ -137,4 +142,11 @@ public class Entity : MonoBehaviour
             sr.color = Color.white;
         }
     }
+
+    public virtual void Die()
+    {
+    
+
+    }
+
 }
