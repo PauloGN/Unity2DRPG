@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class SkeletonAnimationTriggers : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class SkeletonAnimationTriggers : MonoBehaviour
             var player = collider.GetComponent<Player>();
             if (player != null)
             {
-                player.TakeDamage();
+                PlayerStats target = player.GetComponent<PlayerStats>();
+                skEnemy.stats.DoDamage(target);
             }
         }
     }

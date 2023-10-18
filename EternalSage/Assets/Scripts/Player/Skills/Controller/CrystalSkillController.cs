@@ -74,7 +74,7 @@ public class CrystalSkillController : MonoBehaviour
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
-               enemy.TakeDamage();
+               enemy.DamageEffect();
             }
         }
 

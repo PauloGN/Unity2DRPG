@@ -44,12 +44,12 @@ public class Player : Entity
     public PlayerCatchSwordState catchSword { get; private set;}
     public PlayerBlackholeState blackhole {get; private set;}
 
-#endregion
+    #endregion
 
 
 #region Components
 
-public SkillManager skill {get; private set;}
+    public SkillManager skill {get; private set;}
     public GameObject sword { get; private set; }
 
 #endregion

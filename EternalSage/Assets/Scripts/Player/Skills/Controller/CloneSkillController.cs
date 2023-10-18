@@ -67,7 +67,7 @@ public class CloneSkillController : MonoBehaviour
             var enemy = collider.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage();
+                enemy.DamageEffect();
 
                 if (canDuplicateClone)
                 {

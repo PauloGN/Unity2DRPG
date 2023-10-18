@@ -1315,11 +1315,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 628312158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a1bfae764e7d8146befdecee6fdd8b5, type: 3}
+  m_Script: {fileID: 11500000, guid: f614b5a832d5d6940ba88fb16033e1da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
-  maxHealth: 50
+  strenght:
+    baseValue: 5
+    modifiers: 
+  damage:
+    baseValue: 10
+    modifiers: 05000000
+  maxHealth:
+    baseValue: 100
+    modifiers: 
   currentHelth: 0
 --- !u!1 &677315384
 GameObject:
@@ -3043,10 +3050,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1741014367}
   - component: {fileID: 1741014368}
-  - component: {fileID: 1741014372}
   - component: {fileID: 1741014371}
   - component: {fileID: 1741014370}
   - component: {fileID: 1741014369}
+  - component: {fileID: 1741014372}
   m_Layer: 7
   m_Name: EnemySkeleton
   m_TagString: Untagged
@@ -3198,11 +3205,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1741014366}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a1bfae764e7d8146befdecee6fdd8b5, type: 3}
+  m_Script: {fileID: 11500000, guid: ec30e43a4c174fa408e627e5d6567d8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  maxHealth: 10
+  strenght:
+    baseValue: 0
+    modifiers: 
+  damage:
+    baseValue: 5
+    modifiers: 
+  maxHealth:
+    baseValue: 100
+    modifiers: 
   currentHelth: 0
 --- !u!1 &1777394812
 GameObject:

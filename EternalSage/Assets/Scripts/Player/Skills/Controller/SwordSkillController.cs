@@ -118,7 +118,7 @@ public class SwordSkillController : MonoBehaviour
                     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1.0f);
                     foreach (Collider2D hit in colliders)
                     {
-                        hit.GetComponent<Enemy>()?.TakeDamage();
+                        hit.GetComponent<Enemy>()?.DamageEffect();
                     }
                 }
             }
@@ -181,7 +181,7 @@ public class SwordSkillController : MonoBehaviour
 
     private void SwordSkillDamage(Enemy enemy)
     {
-        enemy?.TakeDamage();
+        enemy?.DamageEffect();
         enemy.StartCoroutine("FreezeTimeFor", freezeTimeDuration);
     }
 

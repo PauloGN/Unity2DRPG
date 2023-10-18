@@ -50,7 +50,7 @@ public class Entity : MonoBehaviour
 
     }
 
-    public virtual void TakeDamage()
+    public virtual void DamageEffect()
     {
         if(fX != null)
         {

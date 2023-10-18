@@ -5,33 +5,40 @@ using UnityEngine;
 
 public class EntityStats : MonoBehaviour
 {
-
-    public int damage;
-    public int maxHealth;
+    public Stat strenght;
+    public Stat damage;
+    public Stat maxHealth;
 
 
     //internal controllers
     [SerializeField] private int currentHelth;
 
-    private void Start()
+    protected virtual void Start()
     {
-        currentHelth = maxHealth;
+        currentHelth = maxHealth.GetValue();
     }
 
-    public void TakeDamage(int _dmg)
+    public virtual void DoDamage(EntityStats _targetStats)
+    {
+        int totalDamage = damage.GetValue() + strenght.GetValue();
+        _targetStats.TakeDamage(totalDamage);
+    }
+
+    public virtual void TakeDamage(int _dmg)
     {
         currentHelth -= _dmg;
+
+        Debug.Log("Damage Taken " + _dmg);
 
         if(currentHelth <= 0)
         {
             currentHelth = 0;
             Die();
         }
-
     }
 
-    private void Die()
+    protected virtual void Die()
     {
-        throw new NotImplementedException();
+        Debug.Log("Die aewwwwwww");
     }
 }
