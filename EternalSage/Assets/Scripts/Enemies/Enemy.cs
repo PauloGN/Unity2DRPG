@@ -117,4 +117,8 @@ public class Enemy : Entity
         }
     }
 
+    public virtual void DestroyEnemyObjAt(float _delayTime = 0.0f)
+    {
+        Destroy(gameObject, _delayTime);
+    }
 }

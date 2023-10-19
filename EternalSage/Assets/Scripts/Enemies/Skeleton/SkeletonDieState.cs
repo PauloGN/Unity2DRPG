@@ -21,8 +21,7 @@ public class SkeletonDieState : EnemyState
         base.Enter();
         skEnemy.SetZeroVelocity();
         skEnemy.rb.bodyType = RigidbodyType2D.Static;
-        skEnemy.GetComponent<Collider2D>().enabled = false;
-        
+        skEnemy.cd.enabled = false;   
     }
 
     public override void Exit()
@@ -33,5 +32,10 @@ public class SkeletonDieState : EnemyState
     public override void Update()
     {
         base.Update();
+        //triggered on the animation time line called by a function
+        if (triggerCalled)
+        {
+            skEnemy.DestroyEnemyObjAt(1.0f);
+        }
     }
 }

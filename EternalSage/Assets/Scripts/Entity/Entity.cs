@@ -29,6 +29,7 @@ public class Entity : MonoBehaviour
     public EntityFX fX {get; private set; }
     public SpriteRenderer sr { get; private set; }
     public EntityStats stats { get; private set; }
+    public Collider2D cd { get; private set; }
     #endregion
 
     protected virtual void Awake()
@@ -43,6 +44,7 @@ public class Entity : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         fX = GetComponent<EntityFX>();
         stats = GetComponent<EntityStats>();
+        cd = GetComponent<Collider2D>();
     }
     protected virtual void Update()
     {
