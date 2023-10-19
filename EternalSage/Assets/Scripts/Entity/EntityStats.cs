@@ -13,8 +13,10 @@ public class EntityStats : MonoBehaviour
     public Stat armor;
     public Stat evasion;
     [Space]
-    [Header("Attacking Stats")]
+    [Header("Offensive Stats")]
     public Stat damage;
+    public Stat critChance;
+    public Stat critPower;       //Default value 150%
 
     //internal controllers
     [SerializeField] private int currentHelth;
@@ -22,6 +24,7 @@ public class EntityStats : MonoBehaviour
     protected virtual void Start()
     {
         currentHelth = maxHealth.GetValue();
+        critPower.SetdefaultValue(150);
     }
 
     public virtual void DoDamage(EntityStats _targetStats)
@@ -33,6 +36,13 @@ public class EntityStats : MonoBehaviour
         }
 
         int totalDamage = damage.GetValue() + strength.GetValue();
+        //Check Critical damage chance and amount
+        if (CanCrit())
+        {
+            totalDamage = CalculateCriticalDamageOf(totalDamage);
+            Debug.Log("CRITICAL DAMAGE: " + totalDamage);
+        }
+
         //Check Armor power and returns the damage to be aplied
         totalDamage = CheckTargetArmor(_targetStats, totalDamage);
         _targetStats.TakeDamage(totalDamage);
@@ -51,6 +61,13 @@ public class EntityStats : MonoBehaviour
             Die();
         }
     }
+
+    protected virtual void Die()
+    {
+        Debug.Log("Entity Die aewwwwwww");
+    }
+
+    #region Stats Check and Mechanics
     private int CheckTargetArmor(EntityStats _targetStats, int totalDamage)
     {
         totalDamage -= _targetStats.armor.GetValue();
@@ -67,9 +84,24 @@ public class EntityStats : MonoBehaviour
         }
         return false;
     }
-
-    protected virtual void Die()
+    private bool CanCrit()
     {
-        Debug.Log("Entity Die aewwwwwww");
+        int totalCriticalChance = critChance.GetValue() + agility.GetValue();
+
+        if(Random.Range(0, 100) <= totalCriticalChance)
+        {
+            return true;
+        }
+        return false;
     }
+    private int CalculateCriticalDamageOf(int _dmg)
+    {
+        //Getting a percentage of the value
+        float totalCritPower = (critPower.GetValue() + strength.GetValue()) * 0.01f;
+        float critDamage = _dmg * totalCritPower;
+
+        return Mathf.RoundToInt(critDamage);
+    }
+    #endregion
+
 }

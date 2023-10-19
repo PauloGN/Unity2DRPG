@@ -22,6 +22,10 @@ public class Stat
         return finalValue;
     }
 
+    public void SetdefaultValue(int _value)
+    {
+        baseValue = _value;
+    }
 
     public void AddModifiers(int _modifier)
     {

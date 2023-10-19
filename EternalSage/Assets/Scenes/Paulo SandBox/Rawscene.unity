@@ -1466,6 +1466,12 @@ MonoBehaviour:
   damage:
     baseValue: 10
     modifiers: 05000000
+  critChance:
+    baseValue: 0
+    modifiers: 
+  critPower:
+    baseValue: 0
+    modifiers: 
   currentHelth: 0
 --- !u!1 &669860349
 GameObject:
@@ -2973,6 +2979,12 @@ MonoBehaviour:
   damage:
     baseValue: 2
     modifiers: 
+  critChance:
+    baseValue: 50
+    modifiers: 
+  critPower:
+    baseValue: 0
+    modifiers: 
   currentHelth: 0
 --- !u!114 &1454320368
 MonoBehaviour:
@@ -3765,6 +3777,12 @@ MonoBehaviour:
   damage:
     baseValue: 2
     modifiers: 
+  critChance:
+    baseValue: 0
+    modifiers: 
+  critPower:
+    baseValue: 0
+    modifiers: 
   currentHelth: 0
 --- !u!114 &1740342276
 MonoBehaviour:
@@ -4016,6 +4034,12 @@ MonoBehaviour:
     modifiers: 
   damage:
     baseValue: 2
+    modifiers: 
+  critChance:
+    baseValue: 0
+    modifiers: 
+  critPower:
+    baseValue: 0
     modifiers: 
   currentHelth: 0
 --- !u!1 &1776683989
