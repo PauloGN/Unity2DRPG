@@ -1458,9 +1458,12 @@ MonoBehaviour:
     baseValue: 100
     modifiers: 
   armor:
-    baseValue: 10
+    baseValue: 0
     modifiers: 
   evasion:
+    baseValue: 0
+    modifiers: 
+  magicalResistance:
     baseValue: 0
     modifiers: 
   damage:
@@ -1472,6 +1475,19 @@ MonoBehaviour:
   critPower:
     baseValue: 0
     modifiers: 
+  fireDamage:
+    baseValue: 0
+    modifiers: 
+  iceDamage:
+    baseValue: 0
+    modifiers: 
+  metalDamage:
+    baseValue: 0
+    modifiers: 
+  intFactor: 1
+  isIgnited: 0
+  isChilled: 0
+  isShocked: 0
   currentHelth: 0
 --- !u!1 &669860349
 GameObject:
@@ -2956,7 +2972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strength:
-    baseValue: 0
+    baseValue: 2
     modifiers: 
   agility:
     baseValue: 0
@@ -2976,16 +2992,32 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
+  magicalResistance:
+    baseValue: 0
+    modifiers: 
   damage:
-    baseValue: 2
+    baseValue: 13
     modifiers: 
   critChance:
-    baseValue: 50
+    baseValue: 99
     modifiers: 
   critPower:
     baseValue: 0
     modifiers: 
-  currentHelth: 0
+  fireDamage:
+    baseValue: 5
+    modifiers: 
+  iceDamage:
+    baseValue: 0
+    modifiers: 
+  metalDamage:
+    baseValue: 0
+    modifiers: 
+  intFactor: 1
+  isIgnited: 0
+  isChilled: 0
+  isShocked: 0
+  currentHelth: 22
 --- !u!114 &1454320368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3774,6 +3806,9 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
+  magicalResistance:
+    baseValue: 0
+    modifiers: 
   damage:
     baseValue: 2
     modifiers: 
@@ -3783,6 +3818,19 @@ MonoBehaviour:
   critPower:
     baseValue: 0
     modifiers: 
+  fireDamage:
+    baseValue: 0
+    modifiers: 
+  iceDamage:
+    baseValue: 0
+    modifiers: 
+  metalDamage:
+    baseValue: 0
+    modifiers: 
+  intFactor: 1
+  isIgnited: 0
+  isChilled: 0
+  isShocked: 0
   currentHelth: 0
 --- !u!114 &1740342276
 MonoBehaviour:
@@ -3863,7 +3911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1741014367
 Transform:
   m_ObjectHideFlags: 0
@@ -4032,6 +4080,9 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
+  magicalResistance:
+    baseValue: 0
+    modifiers: 
   damage:
     baseValue: 2
     modifiers: 
@@ -4041,6 +4092,19 @@ MonoBehaviour:
   critPower:
     baseValue: 0
     modifiers: 
+  fireDamage:
+    baseValue: 0
+    modifiers: 
+  iceDamage:
+    baseValue: 0
+    modifiers: 
+  metalDamage:
+    baseValue: 0
+    modifiers: 
+  intFactor: 1
+  isIgnited: 0
+  isChilled: 0
+  isShocked: 0
   currentHelth: 0
 --- !u!1 &1776683989
 GameObject:
