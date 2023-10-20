@@ -51,8 +51,42 @@ public class EntityStats : MonoBehaviour
 
         //Apply damage on target
         _targetStats.TakeDamage(totalMagicalDmg);
-    }
 
+
+        //aplying elements logic
+        if(Mathf.Max(_fireDamage, _iceDamage, _metalDamage) <= 0)
+        {
+            return;
+        }
+
+        bool canApplyIgnite = (_fireDamage > _iceDamage) && (_fireDamage > _metalDamage); 
+        bool canApplyChill = (_iceDamage > _fireDamage) && (_iceDamage > _metalDamage);
+        bool canApplyShock = (_metalDamage > _iceDamage) && (_metalDamage > _fireDamage);
+
+        while(!canApplyChill && !canApplyIgnite && !canApplyShock)
+        {
+            if (Random.value < .5f && _fireDamage > 0)
+            {
+                canApplyIgnite = true;
+                _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
+                return;
+            }
+            if (Random.value < .5f && _iceDamage > 0)
+            {
+                canApplyChill = true;
+                _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
+                return;
+            }
+            if (Random.value < .5f && _metalDamage > 0)
+            {
+                canApplyShock = true;
+                _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
+                return;
+            }
+        }
+        _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
+
+    }
 
     public void ApplyElements(bool _ignite, bool _chil, bool _shock)
     {
@@ -85,10 +119,9 @@ public class EntityStats : MonoBehaviour
 
         //Check Armor power and returns the damage to be aplied
         totalDamage = CheckTargetArmor(_targetStats, totalDamage);
-        //  _targetStats.TakeDamage(totalDamage);
+        //_targetStats.TakeDamage(totalDamage);
         DoMagicalDamage(_targetStats);
     }
-
 
     public virtual void TakeDamage(int _dmg)
     {
