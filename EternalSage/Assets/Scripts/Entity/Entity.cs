@@ -64,8 +64,6 @@ public class Entity : MonoBehaviour
 
     protected virtual IEnumerator HitKnockback()
     {
-
-
         isKnocked = true;
         if (rb.bodyType == RigidbodyType2D.Dynamic)
         {
@@ -99,8 +97,8 @@ public class Entity : MonoBehaviour
     #region Velocity
     public void SetZeroVelocity()
     {
-        if (isKnocked) { return; }
-
+        if (isKnocked || rb.bodyType != RigidbodyType2D.Dynamic) { return; }
+          
         rb.velocity = Vector2.zero;
     }
 

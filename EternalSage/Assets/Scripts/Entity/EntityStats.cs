@@ -23,11 +23,21 @@ public class EntityStats : MonoBehaviour
     public Stat iceDamage;
     public Stat metalDamage;
     public int intFactor = 3;   //multipplies the intelligence factor
+    private int igniteDmg;
 
     //Bool controllers
-    public bool isIgnited;
-    public bool isChilled;
-    public bool isShocked;
+    public bool isIgnited;     // Fire damage over time
+    public bool isChilled;     // Slow down target reduce armor by 20%
+    public bool isShocked;     // reduce accuracy by 20%
+
+    //Timers
+    private float ignitedTimer;                 //controller of status duration of ignited effect 
+    private float chilledTimer;
+    private float shockedTimer;
+
+    private float igniteDamageCoolDown = .3f;   //interval to apply damage when ignited
+    private float igniteDmgTimer;               //controller of cooldown
+
 
     //internal controllers
     [SerializeField] private int currentHelth;
@@ -36,6 +46,36 @@ public class EntityStats : MonoBehaviour
     {
         currentHelth = maxHealth.GetValue();
         critPower.SetdefaultValue(150);
+    }
+
+    protected virtual void Update()
+    {
+        ignitedTimer -= Time.deltaTime;
+        chilledTimer -= Time.deltaTime;
+        shockedTimer -= Time.deltaTime;
+        igniteDmgTimer -= Time.deltaTime;
+
+        if(ignitedTimer <= 0.0f)
+        {
+            isIgnited = false;
+        }
+
+        if(chilledTimer <= 0.0f)
+        {
+            isChilled = false;
+        }
+
+        if (shockedTimer <= 0.0f)
+        {
+            isShocked = false;
+        }
+
+        if (igniteDmgTimer <= 0 && isIgnited)
+        {
+            Debug.Log("BURNIIIIIINGGGG!!!!!!!!" + igniteDmg);
+            DecreaseHealthBy(igniteDmg);
+            igniteDmgTimer = igniteDamageCoolDown;
+        }
     }
 
     public virtual void DoMagicalDamage(EntityStats _targetStats)
@@ -53,7 +93,7 @@ public class EntityStats : MonoBehaviour
         _targetStats.TakeDamage(totalMagicalDmg);
 
 
-        //aplying elements logic
+        //aplying elementals logic
         if(Mathf.Max(_fireDamage, _iceDamage, _metalDamage) <= 0)
         {
             return;
@@ -84,8 +124,13 @@ public class EntityStats : MonoBehaviour
                 return;
             }
         }
-        _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
 
+        if (canApplyIgnite)
+        {
+            _targetStats.SetupIgniteDamage(Mathf.RoundToInt(_fireDamage * .20f));
+        }
+
+        _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
     }
 
     public void ApplyElements(bool _ignite, bool _chil, bool _shock)
@@ -95,9 +140,24 @@ public class EntityStats : MonoBehaviour
             return;
         }
 
-        isShocked = _shock;
-        isIgnited = _ignite;
-        isChilled = _chil;
+        //Duration controller
+        if (_ignite)
+        {
+            isIgnited = _ignite;
+            ignitedTimer = 2.0f;
+        }
+
+        if (_chil)
+        {
+            isChilled = _chil;
+            chilledTimer = 2.0f;
+        }
+        if (_shock)
+        {
+            isShocked = _shock;
+            shockedTimer = 2.0f;
+        }
+
     }
 
     public virtual void DoDamage(EntityStats _targetStats)
@@ -127,6 +187,19 @@ public class EntityStats : MonoBehaviour
     {
         currentHelth -= _dmg;
 
+       Debug.Log("Damage Taken " + _dmg);
+
+        if (currentHelth <= 0)
+        {
+            currentHelth = 0;
+            Die();
+        }
+    }
+
+    private void DecreaseHealthBy(int _dmg)
+    {
+        currentHelth -= _dmg;
+
         Debug.Log("Damage Taken " + _dmg);
 
         if (currentHelth <= 0)
@@ -149,16 +222,35 @@ public class EntityStats : MonoBehaviour
         totalMagicalDmg = Mathf.Clamp(totalMagicalDmg, 0, int.MaxValue);
         return totalMagicalDmg;
     }
+    public void SetupIgniteDamage(int _dmg) => igniteDmg = _dmg;
     private int CheckTargetArmor(EntityStats _targetStats, int totalDamage)
     {
-        totalDamage -= _targetStats.armor.GetValue();
+        //Means if the target being attacke is chilled  its armor is only 80% efficient
+        if (_targetStats.isChilled)
+        {
+            totalDamage -= Mathf.RoundToInt(_targetStats.armor.GetValue() * .8f);
+        }
+        else
+        {
+            //not chilled is 100% armor efficient
+            totalDamage -= _targetStats.armor.GetValue();
+        }
+
         totalDamage = Mathf.Clamp(totalDamage, 0, int.MaxValue);
         return totalDamage;
     }
     private bool TargetCanAvoidAttack(EntityStats _targetStats)
     {
-        int totalEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
-        if (Random.Range(0, 100) < totalEvasion)
+        int totalTargetEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
+
+        //Elemental effect
+        //means when the entity owner is shocked, it loses 20% of precision
+        if (isShocked)
+        {
+            totalTargetEvasion += 20;
+        }
+
+        if (Random.Range(0, 100) < totalTargetEvasion)
         {
             Debug.Log("Attack avoided");
             return true;

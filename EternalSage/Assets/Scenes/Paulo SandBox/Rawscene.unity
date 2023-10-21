@@ -1476,7 +1476,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   fireDamage:
-    baseValue: 0
+    baseValue: 10
     modifiers: 
   iceDamage:
     baseValue: 0
@@ -3008,12 +3008,12 @@ MonoBehaviour:
     baseValue: 5
     modifiers: 
   iceDamage:
-    baseValue: 0
+    baseValue: 5
     modifiers: 
   metalDamage:
-    baseValue: 0
+    baseValue: 5
     modifiers: 
-  intFactor: 1
+  intFactor: 0
   isIgnited: 0
   isChilled: 0
   isShocked: 0
@@ -3798,7 +3798,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   maxHealth:
-    baseValue: 10
+    baseValue: 50
     modifiers: 
   armor:
     baseValue: 0
