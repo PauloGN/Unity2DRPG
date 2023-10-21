@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class EntityStats : MonoBehaviour
 {
+    EntityFX fx;
+
     [Header("Major Stats")]
     public Stat strength;       // increase damage and crit.power
     public Stat agility;        // increase evasion and crit.chance
@@ -23,7 +25,9 @@ public class EntityStats : MonoBehaviour
     public Stat iceDamage;
     public Stat metalDamage;
     public int intFactor = 3;   //multipplies the intelligence factor
+    public float elementalDuration = 2.0f;
     private int igniteDmg;
+
     [Header("Events")]
     public System.Action onHealthChanged;
 
@@ -47,6 +51,8 @@ public class EntityStats : MonoBehaviour
     {
         currentHelth = GetMaxHealthValue();
         critPower.SetdefaultValue(150);
+
+        fx = GetComponent<EntityFX>();
     }
 
     protected virtual void Update()
@@ -148,18 +154,21 @@ public class EntityStats : MonoBehaviour
         if (_ignite)
         {
             isIgnited = _ignite;
-            ignitedTimer = 2.0f;
+            ignitedTimer = elementalDuration;
+            fx.IgniteFxFor(elementalDuration);
         }
 
         if (_chil)
         {
             isChilled = _chil;
-            chilledTimer = 2.0f;
+            chilledTimer = elementalDuration;
+            fx.ChillFxFor(elementalDuration);
         }
         if (_shock)
         {
             isShocked = _shock;
-            shockedTimer = 2.0f;
+            shockedTimer = elementalDuration;
+            fx.shockFxFor(elementalDuration);
         }
 
     }

@@ -1538,6 +1538,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMat: {fileID: 2100000, guid: c691729d4dbace248abdd216ba8550d5, type: 2}
   flashTime: 0.1
+  igniteColor: []
+  chillColor: []
+  shockColor: []
 --- !u!114 &628312164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1584,15 +1587,16 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   fireDamage:
-    baseValue: 10
+    baseValue: 0
     modifiers: 
   iceDamage:
-    baseValue: 0
+    baseValue: 10
     modifiers: 
   metalDamage:
     baseValue: 0
     modifiers: 
   intFactor: 1
+  elementalDuration: 2
   isIgnited: 0
   isChilled: 0
   isShocked: 0
@@ -3238,6 +3242,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMat: {fileID: 2100000, guid: c691729d4dbace248abdd216ba8550d5, type: 2}
   flashTime: 0.2
+  igniteColor:
+  - {r: 0.754717, g: 0.4556782, b: 0.23139909, a: 1}
+  - {r: 0.6603774, g: 0.49839804, b: 0.3769135, a: 1}
+  chillColor:
+  - {r: 0, g: 0.6296643, b: 0.8773585, a: 1}
+  - {r: 0.033018887, g: 0.4704011, b: 1, a: 1}
+  shockColor:
+  - {r: 0.9056604, g: 0.72367394, b: 0.252047, a: 1}
+  - {r: 0.8773585, g: 0.73192734, b: 0.45109472, a: 1}
 --- !u!114 &1454320367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3284,19 +3297,20 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   fireDamage:
-    baseValue: 5
+    baseValue: 0
     modifiers: 
   iceDamage:
-    baseValue: 5
+    baseValue: 0
     modifiers: 
   metalDamage:
-    baseValue: 5
+    baseValue: 0
     modifiers: 
   intFactor: 0
+  elementalDuration: 2
   isIgnited: 0
   isChilled: 0
   isShocked: 0
-  currentHelth: 22
+  currentHelth: 0
 --- !u!114 &1454320368
 MonoBehaviour:
   m_ObjectHideFlags: 0
