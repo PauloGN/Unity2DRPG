@@ -14,6 +14,8 @@ public class Player : Entity
     public float moveSpeed = 12.0f;
     public float jumpForce = 12.0f;
     public float xJumpForce = 6.0f;
+    private float defaultMoveSpeed;
+    private float defaultJumpForce;
     [Range(0.0f, 1.0f)]
     public float airControl = 0.5f;
     [Range(0.0f, 1.0f)]
@@ -23,6 +25,7 @@ public class Player : Entity
     [Space]
     public float dashSpeed = 25.0f;
     public float dashDuration = .5f;
+    private float defaultDashSpeed;
     public float dashDir { get; private set; } = 1;
 
     //controllers
@@ -82,6 +85,11 @@ public class Player : Entity
         base.Start();
         skill = SkillManager.instance;
         stateMachine.Initialize(idleState);
+
+        defaultMoveSpeed = moveSpeed;
+        defaultJumpForce = jumpForce;
+        defaultDashSpeed = dashSpeed;
+
     }
 
     protected override void Update()
@@ -95,6 +103,24 @@ public class Player : Entity
             skill.crystalSkill.CanUseSkill();
         }
         //Debug
+    }
+
+    public override void SlowEntityBy(float _slowPercentage, float _slowDuration)
+    {
+        moveSpeed = moveSpeed *( 1 -_slowPercentage);
+        jumpForce = jumpForce * (1 - _slowPercentage);
+        dashSpeed = dashSpeed * (1 - _slowPercentage);
+        anim.speed = anim.speed *(1- _slowPercentage);
+
+        Invoke("ReturnDefaultSpeed", _slowDuration);
+    }
+
+    protected override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+        moveSpeed = defaultMoveSpeed;
+        jumpForce = defaultJumpForce;
+        dashSpeed = defaultDashSpeed;
     }
 
     private void CheckInputForDash ()

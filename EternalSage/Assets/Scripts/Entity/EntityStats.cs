@@ -162,6 +162,8 @@ public class EntityStats : MonoBehaviour
         {
             isChilled = _chil;
             chilledTimer = elementalDuration;
+            float slowPercentage = .2f;
+            GetComponent<Entity>()?.SlowEntityBy(slowPercentage, elementalDuration);
             fx.ChillFxFor(elementalDuration);
         }
         if (_shock)

@@ -1538,9 +1538,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMat: {fileID: 2100000, guid: c691729d4dbace248abdd216ba8550d5, type: 2}
   flashTime: 0.1
-  igniteColor: []
-  chillColor: []
-  shockColor: []
+  igniteColor:
+  - {r: 0.9811321, g: 0.42398748, b: 0, a: 1}
+  - {r: 0.8113208, g: 0.48322487, b: 0.07271269, a: 1}
+  chillColor:
+  - {r: 0, g: 0.8202615, b: 1, a: 1}
+  - {r: 0.5771182, g: 0.9339623, b: 0.8952862, a: 1}
+  shockColor:
+  - {r: 1, g: 0.9470248, b: 0, a: 1}
+  - {r: 0.6886792, g: 0.6138407, b: 0, a: 1}
 --- !u!114 &628312164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3300,7 +3306,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   iceDamage:
-    baseValue: 0
+    baseValue: 10
     modifiers: 
   metalDamage:
     baseValue: 0
