@@ -17,6 +17,9 @@ public class Entity : MonoBehaviour
     [SerializeField] protected Vector2 knockbackForce;
     [SerializeField] protected float knockbackDuration = .2f;
 
+    [Header("Events info")]
+    public System.Action OnFliped;
+
 
     //controllers
     public int facingDir { get; private set; } = 1;
@@ -116,6 +119,11 @@ public class Entity : MonoBehaviour
         facingDir *= -1;
         facingRight = !facingRight;
         transform.Rotate(0.0f, 180.0f, 0.0f);
+
+        if(OnFliped != null)
+        {
+            OnFliped();
+        }
     }
 
     public void FlipController(float xDir)

@@ -24,6 +24,8 @@ public class EntityStats : MonoBehaviour
     public Stat metalDamage;
     public int intFactor = 3;   //multipplies the intelligence factor
     private int igniteDmg;
+    [Header("Events")]
+    public System.Action onHealthChanged;
 
     //Bool controllers
     public bool isIgnited;     // Fire damage over time
@@ -39,12 +41,11 @@ public class EntityStats : MonoBehaviour
     private float igniteDmgTimer;               //controller of cooldown
 
 
-    //internal controllers
-    [SerializeField] private int currentHelth;
+    public int currentHelth;
 
     protected virtual void Start()
     {
-        currentHelth = maxHealth.GetValue();
+        currentHelth = GetMaxHealthValue();
         critPower.SetdefaultValue(150);
     }
 
@@ -74,6 +75,10 @@ public class EntityStats : MonoBehaviour
         {
             Debug.Log("BURNIIIIIINGGGG!!!!!!!!" + igniteDmg);
             DecreaseHealthBy(igniteDmg);
+            if (currentHelth < 0)
+            {
+                Die();
+            }
             igniteDmgTimer = igniteDamageCoolDown;
         }
     }
@@ -91,7 +96,6 @@ public class EntityStats : MonoBehaviour
 
         //Apply damage on target
         _targetStats.TakeDamage(totalMagicalDmg);
-
 
         //aplying elementals logic
         if(Mathf.Max(_fireDamage, _iceDamage, _metalDamage) <= 0)
@@ -185,7 +189,7 @@ public class EntityStats : MonoBehaviour
 
     public virtual void TakeDamage(int _dmg)
     {
-        currentHelth -= _dmg;
+       DecreaseHealthBy(_dmg);
 
        Debug.Log("Damage Taken " + _dmg);
 
@@ -196,16 +200,13 @@ public class EntityStats : MonoBehaviour
         }
     }
 
-    private void DecreaseHealthBy(int _dmg)
+    protected virtual void DecreaseHealthBy(int _dmg)
     {
         currentHelth -= _dmg;
 
-        Debug.Log("Damage Taken " + _dmg);
-
-        if (currentHelth <= 0)
+        if (onHealthChanged != null)
         {
-            currentHelth = 0;
-            Die();
+            onHealthChanged();
         }
     }
 
@@ -274,6 +275,10 @@ public class EntityStats : MonoBehaviour
         float critDamage = _dmg * totalCritPower;
 
         return Mathf.RoundToInt(critDamage);
+    }
+    public int GetMaxHealthValue()
+    {
+        return maxHealth.GetValue() + (vitality.GetValue() * 5);
     }
     #endregion
 }
