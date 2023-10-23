@@ -1,3 +1,4 @@
+using TreeEditor;
 using UnityEngine;
 
 public class EntityStats : MonoBehaviour
@@ -23,7 +24,9 @@ public class EntityStats : MonoBehaviour
     [Header("Magic Stats")]
     public Stat fireDamage;
     public Stat iceDamage;
+    [SerializeField] GameObject thunderPrefab;
     public Stat metalDamage;
+    private int thunderDamage;
     public int intFactor = 3;   //multipplies the intelligence factor
     public float elementalDuration = 2.0f;
     private int igniteDmg;
@@ -140,25 +143,31 @@ public class EntityStats : MonoBehaviour
             _targetStats.SetupIgniteDamage(Mathf.RoundToInt(_fireDamage * .20f));
         }
 
+        if (canApplyShock)
+        {
+            _targetStats.SetupThundStrike(Mathf.RoundToInt(_metalDamage * .20f));
+        }
+
         _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
     }
 
     public void ApplyElements(bool _ignite, bool _chil, bool _shock)
     {
-        if (isChilled || isChilled || isShocked)
-        {
-            return;
-        }
+
+        bool canApplyIgnite = !isIgnited && !isChilled && !isShocked;
+        bool canApplyChill = !isIgnited && !isChilled && !isShocked;
+        bool canApplyShock= !isIgnited && !isChilled;
+
 
         //Duration controller
-        if (_ignite)
+        if (_ignite && canApplyIgnite)
         {
             isIgnited = _ignite;
             ignitedTimer = elementalDuration;
             fx.IgniteFxFor(elementalDuration);
         }
 
-        if (_chil)
+        if (_chil && canApplyChill)
         {
             isChilled = _chil;
             chilledTimer = elementalDuration;
@@ -166,13 +175,71 @@ public class EntityStats : MonoBehaviour
             GetComponent<Entity>()?.SlowEntityBy(slowPercentage, elementalDuration);
             fx.ChillFxFor(elementalDuration);
         }
-        if (_shock)
+        if (_shock && canApplyShock)
         {
-            isShocked = _shock;
-            shockedTimer = elementalDuration;
-            fx.shockFxFor(elementalDuration);
+            if (!isShocked)
+            {
+                ApplyShock(_shock);
+            }
+            else
+            {
+
+                if (GetComponent<Player>() != null)
+                {
+                    return;
+                }
+
+                HitNearestTargetWithThunderStrike();
+
+            }
+        }
+    }
+
+    public void ApplyShock(bool _shock)
+    {
+        if (isShocked)
+        {
+            return;
         }
 
+        isShocked = _shock;
+        shockedTimer = elementalDuration;
+        fx.shockFxFor(elementalDuration);
+    }
+
+    private void HitNearestTargetWithThunderStrike()
+    {
+        //Find closest target among the enemies
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 15);
+        float closestDistance = Mathf.Infinity;
+        Transform closestEnemy = null;
+        foreach (Collider2D hit in colliders)
+        {
+            Enemy enemy = hit.GetComponent<Enemy>();
+            if (enemy != null && (Vector2.Distance(transform.position, enemy.transform.position) > .5f))
+            {
+                float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
+
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestEnemy = enemy.transform;
+                    closestDistance = distanceToEnemy;
+                }
+            }
+            //in case there is no enemy in range then make itselt the closest one
+            if (closestEnemy == null)
+            {
+                closestEnemy = transform;
+            }
+
+        }
+        // spawn and damage next enemy
+        if (closestEnemy != null)
+        {
+            GameObject newThunderStrik = Instantiate(thunderPrefab, transform.position, Quaternion.identity);
+            EntityStats entityStats = closestEnemy.GetComponent<EntityStats>();
+            newThunderStrik.GetComponent<ThunderStrikeController>()?.SetupThunderStrike(thunderDamage, entityStats);
+        }
     }
 
     public virtual void DoDamage(EntityStats _targetStats)
@@ -235,6 +302,7 @@ public class EntityStats : MonoBehaviour
         return totalMagicalDmg;
     }
     public void SetupIgniteDamage(int _dmg) => igniteDmg = _dmg;
+    public void SetupThundStrike(int _dmg)=> thunderDamage = _dmg;
     private int CheckTargetArmor(EntityStats _targetStats, int totalDamage)
     {
         //Means if the target being attacke is chilled  its armor is only 80% efficient
