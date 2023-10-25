@@ -5,18 +5,13 @@ using UnityEngine;
 public class ItemObject : MonoBehaviour
 {
 
-    #region Components
-    private SpriteRenderer sr;
-    #endregion
-
     [SerializeField] private ItemData itemData;
 
-    private void Start()
+    private void OnValidate()
     {
-        sr = GetComponent<SpriteRenderer>();
-        sr.sprite = itemData.icon;
+        GetComponent<SpriteRenderer>().sprite = itemData.icon;
+        gameObject.name = "Item Object - " + itemData.name;
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,6 +22,4 @@ public class ItemObject : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
 }
