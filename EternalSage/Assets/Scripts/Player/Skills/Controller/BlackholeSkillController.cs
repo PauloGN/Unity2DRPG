@@ -108,7 +108,7 @@ public class BlackholeSkillController : MonoBehaviour
         if (playerCanDesapear)
         {
             playerCanDesapear = false;
-            PlayerManager.instance.player.MakeTransparent(true);
+            PlayerManager.instance.player.fX.MakeTransparent(true);
         }
     }
 
@@ -155,7 +155,7 @@ public class BlackholeSkillController : MonoBehaviour
         playerCanExitState = true;
         canShrink = true;
         cloneAttackReleased = false;
-        PlayerManager.instance.player.MakeTransparent(false);
+        PlayerManager.instance.player.fX.MakeTransparent(false);
     }
 
     private void DestroyHotKeys()

@@ -16,6 +16,6 @@ public class EnemyStats : EntityStats
     public override void TakeDamage(int _dmg)
     {
         base.TakeDamage(_dmg);
-        enemy.DamageEffect();
+        enemy.DamageInpact();
     }
 }

@@ -55,7 +55,7 @@ public class Entity : MonoBehaviour
 
     }
 
-    public virtual void DamageEffect()
+    public virtual void DamageInpact()
     {
         if(fX != null)
         {
@@ -113,6 +113,7 @@ public class Entity : MonoBehaviour
         FlipController(xVelocity);
     }
     #endregion
+
     #region Flip
     public void Flip()
     {
@@ -138,18 +139,6 @@ public class Entity : MonoBehaviour
         }
     }
     #endregion
-
-    public void MakeTransparent(bool _transparent)
-    {
-        if (_transparent)
-        {
-            sr.color = Color.clear;
-        }
-        else
-        {
-            sr.color = Color.white;
-        }
-    }
 
     public virtual void Die()
     {

@@ -13,6 +13,7 @@ public class CrystalSkillController : MonoBehaviour
     private bool canGrow;
     private bool canMove;
     private float moveSpeed;
+    private Player playerRef;
     private Transform closestTarget;
     [SerializeField]private float growSpeed;
     [SerializeField] private LayerMask whatIsEnemy;
@@ -21,6 +22,7 @@ public class CrystalSkillController : MonoBehaviour
 
     public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMove, float _moveSpeed, Transform _closestTarget)
     {
+        playerRef = PlayerManager.instance.player;
         crystalExistTimer = _crystalDuration;
         canExplode = _canExplode;
         canMove = _canMove;
@@ -74,7 +76,7 @@ public class CrystalSkillController : MonoBehaviour
             Enemy enemy = hit.GetComponent<Enemy>();
             if (enemy != null)
             {
-               enemy.DamageEffect();
+                playerRef.stats.DoMagicalDamage(enemy.GetComponent<EntityStats>());
             }
         }
 

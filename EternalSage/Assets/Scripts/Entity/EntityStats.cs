@@ -38,6 +38,7 @@ public class EntityStats : MonoBehaviour
     public bool isIgnited;     // Fire damage over time
     public bool isChilled;     // Slow down target reduce armor by 20%
     public bool isShocked;     // reduce accuracy by 20%
+    public bool isDead;
 
     //Timers
     private float ignitedTimer;                 //controller of status duration of ignited effect 
@@ -65,12 +66,12 @@ public class EntityStats : MonoBehaviour
         shockedTimer -= Time.deltaTime;
         igniteDmgTimer -= Time.deltaTime;
 
-        if(ignitedTimer <= 0.0f)
+        if (ignitedTimer <= 0.0f)
         {
             isIgnited = false;
         }
 
-        if(chilledTimer <= 0.0f)
+        if (chilledTimer <= 0.0f)
         {
             isChilled = false;
         }
@@ -80,18 +81,14 @@ public class EntityStats : MonoBehaviour
             isShocked = false;
         }
 
-        if (igniteDmgTimer <= 0 && isIgnited)
+        if (isIgnited)
         {
-            Debug.Log("BURNIIIIIINGGGG!!!!!!!!" + igniteDmg);
-            DecreaseHealthBy(igniteDmg);
-            if (currentHelth < 0)
-            {
-                Die();
-            }
-            igniteDmgTimer = igniteDamageCoolDown;
+            ApplyIgniteDmgAndBurn();
         }
     }
 
+
+    #region Magical Damage and Elemental logic
     public virtual void DoMagicalDamage(EntityStats _targetStats)
     {
         //calculate the total damage to be applied
@@ -107,16 +104,20 @@ public class EntityStats : MonoBehaviour
         _targetStats.TakeDamage(totalMagicalDmg);
 
         //aplying elementals logic
-        if(Mathf.Max(_fireDamage, _iceDamage, _metalDamage) <= 0)
+        if (Mathf.Max(_fireDamage, _iceDamage, _metalDamage) <= 0)
         {
             return;
         }
 
-        bool canApplyIgnite = (_fireDamage > _iceDamage) && (_fireDamage > _metalDamage); 
+        AttemptyToApplyElementalLogic(_targetStats, _fireDamage, _iceDamage, _metalDamage);
+    }
+    private void AttemptyToApplyElementalLogic(EntityStats _targetStats, int _fireDamage, int _iceDamage, int _metalDamage)
+    {
+        bool canApplyIgnite = (_fireDamage > _iceDamage) && (_fireDamage > _metalDamage);
         bool canApplyChill = (_iceDamage > _fireDamage) && (_iceDamage > _metalDamage);
         bool canApplyShock = (_metalDamage > _iceDamage) && (_metalDamage > _fireDamage);
 
-        while(!canApplyChill && !canApplyIgnite && !canApplyShock)
+        while (!canApplyChill && !canApplyIgnite && !canApplyShock)
         {
             if (Random.value < .5f && _fireDamage > 0)
             {
@@ -150,7 +151,6 @@ public class EntityStats : MonoBehaviour
 
         _targetStats.ApplyElements(canApplyIgnite, canApplyChill, canApplyShock);
     }
-
     public void ApplyElements(bool _ignite, bool _chil, bool _shock)
     {
 
@@ -194,7 +194,6 @@ public class EntityStats : MonoBehaviour
             }
         }
     }
-
     public void ApplyShock(bool _shock)
     {
         if (isShocked)
@@ -206,7 +205,14 @@ public class EntityStats : MonoBehaviour
         shockedTimer = elementalDuration;
         fx.shockFxFor(elementalDuration);
     }
-
+    private int CheckTargetMagicalResistence(EntityStats _targetStats, int totalMagicalDmg)
+    {
+        totalMagicalDmg -= _targetStats.magicalResistance.GetValue() + (_targetStats.intelligence.GetValue() * intFactor);
+        totalMagicalDmg = Mathf.Clamp(totalMagicalDmg, 0, int.MaxValue);
+        return totalMagicalDmg;
+    }
+    public void SetupIgniteDamage(int _dmg) => igniteDmg = _dmg;
+    public void SetupThundStrike(int _dmg)=> thunderDamage = _dmg;
     private void HitNearestTargetWithThunderStrike()
     {
         //Find closest target among the enemies
@@ -241,6 +247,20 @@ public class EntityStats : MonoBehaviour
             newThunderStrik.GetComponent<ThunderStrikeController>()?.SetupThunderStrike(thunderDamage, entityStats);
         }
     }
+    private void ApplyIgniteDmgAndBurn()
+    {
+        if (igniteDmgTimer <= 0)
+        {
+            Debug.Log("BURNIIIIIINGGGG!!!!!!!!" + igniteDmg);
+            DecreaseHealthBy(igniteDmg);
+            if (currentHelth < 0 && !isDead)
+            {
+                Die();
+            }
+            igniteDmgTimer = igniteDamageCoolDown;
+        }
+    }
+    #endregion
 
     public virtual void DoDamage(EntityStats _targetStats)
     {
@@ -261,17 +281,17 @@ public class EntityStats : MonoBehaviour
 
         //Check Armor power and returns the damage to be aplied
         totalDamage = CheckTargetArmor(_targetStats, totalDamage);
-        //_targetStats.TakeDamage(totalDamage);
-        DoMagicalDamage(_targetStats);
+        _targetStats.TakeDamage(totalDamage);
+
+
+       // DoMagicalDamage(_targetStats);
     }
 
     public virtual void TakeDamage(int _dmg)
     {
        DecreaseHealthBy(_dmg);
 
-       Debug.Log("Damage Taken " + _dmg);
-
-        if (currentHelth <= 0)
+        if (currentHelth <= 0 && !isDead)
         {
             currentHelth = 0;
             Die();
@@ -290,19 +310,11 @@ public class EntityStats : MonoBehaviour
 
     protected virtual void Die()
     {
+        isDead = true; 
         Debug.Log("Entity Die aewwwwwww");
     }
 
-    #region Stats Check and Mechanics
-    //Magic
-    private int CheckTargetMagicalResistence(EntityStats _targetStats, int totalMagicalDmg)
-    {
-        totalMagicalDmg -= _targetStats.magicalResistance.GetValue() + (_targetStats.intelligence.GetValue() * intFactor);
-        totalMagicalDmg = Mathf.Clamp(totalMagicalDmg, 0, int.MaxValue);
-        return totalMagicalDmg;
-    }
-    public void SetupIgniteDamage(int _dmg) => igniteDmg = _dmg;
-    public void SetupThundStrike(int _dmg)=> thunderDamage = _dmg;
+    #region Stats Check
     private int CheckTargetArmor(EntityStats _targetStats, int totalDamage)
     {
         //Means if the target being attacke is chilled  its armor is only 80% efficient

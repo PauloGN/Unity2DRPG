@@ -16,6 +16,7 @@ public class CloneSkillController : MonoBehaviour
     private bool canDuplicateClone;
     private int facingDir = 1;
     private float chanceToDuplicate;
+    private Player playerRef;
 
     private void Awake()
     {
@@ -43,7 +44,7 @@ public class CloneSkillController : MonoBehaviour
         cloneTimer = cloneDuration;
         canDuplicateClone = _canDuplicateClone;
         chanceToDuplicate = _chanceToDuplicate;
-
+        playerRef = PlayerManager.instance.player;
         if (canAttack)
         {
             anim.SetInteger("AttackNumber", Random.Range(1, 4));
@@ -67,7 +68,7 @@ public class CloneSkillController : MonoBehaviour
             var enemy = collider.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.DamageEffect();
+                playerRef.stats.DoDamage(enemy.GetComponent<EntityStats>());
 
                 if (canDuplicateClone)
                 {
