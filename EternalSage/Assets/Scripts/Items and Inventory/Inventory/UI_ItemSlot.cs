@@ -1,8 +1,9 @@
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class UI_ItemSlot : MonoBehaviour
+public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField]private Image itemImage;
     [SerializeField]private TextMeshProUGUI itemText;
@@ -31,9 +32,17 @@ public class UI_ItemSlot : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    public float cursorSpeed = 5.0f; // Adjust this to control the cursor movement speed.
+    public string horizontalAxisName = "RightStickHorizontal"; // Input axis for horizontal movement.
+    public string verticalAxisName = "RightStickVertical"; // Input axis for vertical movement.
+
     void Update()
     {
-        
+
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log("Equipe new item " + item.data.name);
     }
 }
