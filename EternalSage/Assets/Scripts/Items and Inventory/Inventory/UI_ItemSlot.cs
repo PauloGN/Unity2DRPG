@@ -1,12 +1,12 @@
 using TMPro;
-using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField]private Image itemImage;
-    [SerializeField]private TextMeshProUGUI itemText;
+    [SerializeField] private Image itemImage;
+    [SerializeField] private TextMeshProUGUI itemText;
 
     public InventoryItem item;
 
@@ -32,17 +32,18 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public float cursorSpeed = 5.0f; // Adjust this to control the cursor movement speed.
-    public string horizontalAxisName = "RightStickHorizontal"; // Input axis for horizontal movement.
-    public string verticalAxisName = "RightStickVertical"; // Input axis for vertical movement.
-
-    void Update()
-    {
-
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Equipe new item " + item.data.name);
+        if (item.data.itemType == ItemType.Equipment)
+        {
+            Debug.Log("Equipe new item " + item.data.name);
+        }
     }
 }
+
+/*
+ * enable and use new input system
+ https://www.youtube.com/watch?v=Yjee_e4fICc
+ https://www.youtube.com/watch?v=Y3WNwl1ObC8&t=296s
+
+ */

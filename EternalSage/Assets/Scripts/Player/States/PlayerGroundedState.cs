@@ -23,10 +23,10 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            stateMachineRef.ChangeState(playerRef.blackhole);
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    stateMachineRef.ChangeState(playerRef.blackhole);
+        //}
 
         CheckJumpInput();
         CheckAttackInput();
@@ -76,6 +76,12 @@ public class PlayerGroundedState : PlayerState
         playerRef.sword.GetComponent<SwordSkillController>().ReturnSword();
         return false;
     }
+
+    public void UltimateSkill()
+    {
+        stateMachineRef.ChangeState(playerRef.blackhole);
+    }
+
 }
 
 
