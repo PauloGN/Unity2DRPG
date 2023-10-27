@@ -11,7 +11,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
     public InventoryItem item;
 
 
-    public void UpdateSlot(InventoryItem _newItem)
+    public void UpdateSlot(InventoryItem _newItem, bool lastItem = false)
     {
         item = _newItem;
 
@@ -27,9 +27,28 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
             }
             else
             {
+                if (lastItem && item.stackSize == 1)
+                {
+                    ClearImage();
+                }
                 itemText.text = "";
             }
         }
+    }
+
+    public void ClearImage()
+    {
+        item = null;
+        itemImage.color = Color.clear;
+        itemImage.sprite = null;
+    }
+
+    public void CleanUpSlot()
+    {
+        item = null;
+        itemImage.color = Color.clear;
+        itemImage.sprite = null;
+        itemText.text = "";
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -37,6 +56,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
         if (item.data.itemType == ItemType.Equipment)
         {
             Debug.Log("Equipe new item " + item.data.name);
+            Inventory.instance.EquipeItem(item.data);
         }
     }
 }
