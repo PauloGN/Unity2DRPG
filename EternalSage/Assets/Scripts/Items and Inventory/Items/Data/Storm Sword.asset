@@ -16,3 +16,17 @@ MonoBehaviour:
   itemName: Storm Sword
   icon: {fileID: 678717410, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   equipmentType: 0
+  strength: 2
+  agility: 5
+  intelligence: 2
+  vitality: 3
+  damage: 15
+  critChance: 55
+  critPower: 5
+  health: 0
+  armor: 0
+  evasion: 0
+  magicalResistance: 0
+  fireDamage: 0
+  iceDamage: 0
+  metalDamage: 0

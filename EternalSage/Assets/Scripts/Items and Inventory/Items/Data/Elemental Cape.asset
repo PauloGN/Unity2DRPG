@@ -16,3 +16,17 @@ MonoBehaviour:
   itemName: Elemental Cape
   icon: {fileID: 2114130076, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   equipmentType: 3
+  strength: 0
+  agility: 0
+  intelligence: 25
+  vitality: 0
+  damage: 0
+  critChance: 0
+  critPower: 0
+  health: 20
+  armor: 0
+  evasion: 55
+  magicalResistance: 20
+  fireDamage: 5
+  iceDamage: 5
+  metalDamage: 5

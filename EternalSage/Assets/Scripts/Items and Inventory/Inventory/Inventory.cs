@@ -20,12 +20,12 @@ public class Inventory : MonoBehaviour
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
     [SerializeField] private Transform stashSlotParent;
-
+    [SerializeField] private Transform equipmentSlotParent;
 
     //UI controllers
     private UI_ItemSlot[] inventoryItemSlot;
     private UI_ItemSlot[] stashItemSlot;
-
+    private UI_EquipmentSlot[] equipmentSlot;
 
     private void Awake()
     {
@@ -52,6 +52,7 @@ public class Inventory : MonoBehaviour
 
         inventoryItemSlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         stashItemSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        equipmentSlot =   equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
     }
 
     private void Update()
@@ -96,6 +97,9 @@ public class Inventory : MonoBehaviour
 
         equipment.Add(newItem);
         equipmentDictionary.Add(newEquipment, newItem);
+        //Modifiers are aplied
+        newEquipment.AddModifiers();
+
         RemoveItem(_item);
 
         UpdateSlotUI();
@@ -107,6 +111,7 @@ public class Inventory : MonoBehaviour
         {
             equipment.Remove(value);
             equipmentDictionary.Remove(_itemToRemove);
+            _itemToRemove.RemoveModifiers();
         }
     }
 
@@ -115,6 +120,18 @@ public class Inventory : MonoBehaviour
     #region ADD, REMOVE, and UPDATE ITEMS
     private void UpdateSlotUI(bool removinglast = false)///********
     {
+        //equipe to equipment inventory
+        for (int i = 0; i < equipmentSlot.Length; ++i)
+        {
+            foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+            {
+                if (item.Key.equipmentType == equipmentSlot[i].slotType)
+                {
+                    equipmentSlot[i].UpdateSlot(item.Value);
+                }
+            }
+        }
+
         for (int i = 0; i < inventoryItemSlot.Length; ++i)
         {
             inventoryItemSlot[i].CleanUpSlot();
