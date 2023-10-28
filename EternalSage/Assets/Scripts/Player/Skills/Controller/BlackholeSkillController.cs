@@ -196,6 +196,12 @@ public class BlackholeSkillController : MonoBehaviour
     private void CreateHotKey(Enemy enemy)
     {
 
+        if (gamePadList == null || gamePadList.Count <= 0)
+        {
+            Debug.LogWarning("gamePadList is zero or null");
+            return;
+        }
+
         if (keyCodeList == null || keyCodeList.Count <= 0)
         {
             Debug.LogWarning("KeyCodeList is zero or null");
@@ -230,5 +236,4 @@ public class BlackholeSkillController : MonoBehaviour
     }
 
     public void AddEnemyToList(Transform _enemy)=>targets.Add(_enemy);
-
 }

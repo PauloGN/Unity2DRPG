@@ -13,7 +13,7 @@ public class SkillManager : MonoBehaviour
     public SwordSkill sword { get; private set; }
     public BlackholeSkill blackhole { get; private set; }
     public CrystalSkill crystalSkill { get; private set; }
-
+    
     #endregion
 
     private void Start()
@@ -24,7 +24,6 @@ public class SkillManager : MonoBehaviour
         blackhole = GetComponent<BlackholeSkill>();
         crystalSkill = GetComponent<CrystalSkill>();
     }
-
 
     private void Awake()
     {
@@ -43,8 +42,19 @@ public class SkillManager : MonoBehaviour
         // Get the current joystick names
         string[] currentJoystickNames = Input.GetJoystickNames();
 
+        bool hasGamePad = false;
+        for (int i = 0; i < currentJoystickNames.Length; i++)
+        {
+            hasGamePad = currentJoystickNames[i] != "";
+            Debug.Log(currentJoystickNames[i]);
+            if (hasGamePad)
+            {
+                break;
+            }
+        }
+
         // Compare the length of the arrays to detect changes in connected devices
-        if (currentJoystickNames.Length > 0 && currentJoystickNames[0] != "")
+        if (currentJoystickNames.Length > 0 && hasGamePad)
         {
             // A new joystick was connected
             Debug.Log("Joystick connected");

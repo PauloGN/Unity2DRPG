@@ -8,6 +8,9 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
+    public List<InventoryItem> equipment;
+    public Dictionary<ItemDataEquipment, InventoryItem> equipmentDictionary;
+
     public List<InventoryItem> inventoryItems;
     public Dictionary<ItemData, InventoryItem> inventoryDictionary;
    
@@ -44,6 +47,9 @@ public class Inventory : MonoBehaviour
         stashItems = new List<InventoryItem>();
         stashDictionary = new Dictionary<ItemData, InventoryItem>();
 
+        equipment = new List<InventoryItem>();
+        equipmentDictionary = new Dictionary<ItemDataEquipment, InventoryItem>();
+
         inventoryItemSlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         stashItemSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
     }
@@ -52,28 +58,81 @@ public class Inventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
+
             if (inventoryItems.Count <= 0)
             {
                 return;
             }
-
+ 
             ItemData itemToRemove = inventoryItems[inventoryItems.Count -1].data;
             RemoveItem(itemToRemove);
+            UpdateSlotUI();
         }
     }
 
+    #region Equipp, Unequipp and Update Equipments
+
+    public void EquipeItem(ItemData _item)
+    {
+        ItemDataEquipment newEquipment = _item as ItemDataEquipment;
+        InventoryItem newItem = new InventoryItem(newEquipment);
+
+        ItemDataEquipment oldEquipment = null;
+
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+        {
+            if (item.Key.equipmentType == newEquipment.equipmentType)
+            {
+                oldEquipment = item.Key;
+            }
+        }
+
+        if(oldEquipment != null)
+        {
+            //Remove from the inventor
+            UnequipItem(oldEquipment);
+            AddItem(oldEquipment);
+        }
+
+        equipment.Add(newItem);
+        equipmentDictionary.Add(newEquipment, newItem);
+        RemoveItem(_item);
+
+        UpdateSlotUI();
+    }
+
+    private void UnequipItem(ItemDataEquipment _itemToRemove)
+    {
+        if (equipmentDictionary.TryGetValue(_itemToRemove, out InventoryItem value))
+        {
+            equipment.Remove(value);
+            equipmentDictionary.Remove(_itemToRemove);
+        }
+    }
+
+    #endregion
 
     #region ADD, REMOVE, and UPDATE ITEMS
-    private void UpdateSlotUI()
+    private void UpdateSlotUI(bool removinglast = false)///********
     {
+        for (int i = 0; i < inventoryItemSlot.Length; ++i)
+        {
+            inventoryItemSlot[i].CleanUpSlot();
+        }
+
+        for (int i = 0; i < stashItemSlot.Length; ++i)
+        {
+            stashItemSlot[i].CleanUpSlot();
+        }
+
         for (int i = 0; i < inventoryItems.Count; ++i)
         {
-            inventoryItemSlot[i].UpdateSlot(inventoryItems[i]);
+            inventoryItemSlot[i].UpdateSlot(inventoryItems[i], removinglast);///***** inside
         }
 
         for (int i = 0; i < stashItems.Count; ++i)
         {
-            stashItemSlot[i].UpdateSlot(stashItems[i]);
+            stashItemSlot[i].UpdateSlot(stashItems[i], removinglast);
         }
     }
 
@@ -136,6 +195,7 @@ public class Inventory : MonoBehaviour
         {
             if (value.stackSize <= 1)
             {
+                UpdateSlotUI(true);//***********************
                 inventoryItems.Remove(value);
                 inventoryDictionary.Remove(_item);
             }
@@ -166,8 +226,4 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
-
-
-
-
 }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   itemName: Elemental Cape
-  icon: {fileID: -1783965613, guid: 9c7355b0cb8a5024bba44738f70d9e74, type: 3}
+  icon: {fileID: 2114130076, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   equipmentType: 3
