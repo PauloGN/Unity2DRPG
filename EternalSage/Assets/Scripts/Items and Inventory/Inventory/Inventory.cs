@@ -105,7 +105,7 @@ public class Inventory : MonoBehaviour
         UpdateSlotUI();
     }
 
-    private void UnequipItem(ItemDataEquipment _itemToRemove)
+    public void UnequipItem(ItemDataEquipment _itemToRemove)
     {
         if (equipmentDictionary.TryGetValue(_itemToRemove, out InventoryItem value))
         {

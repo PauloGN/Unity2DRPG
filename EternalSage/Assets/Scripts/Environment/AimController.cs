@@ -33,5 +33,4 @@ public class AimController : MonoBehaviour
     }
 
     public bool IsAiming() => GetMouseAiming() || Input.GetButton("AimSw");
-
 }
