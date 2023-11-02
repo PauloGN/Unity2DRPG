@@ -6,6 +6,8 @@ public class EnemyStats : EntityStats
 {
 
     Enemy enemy;
+    protected ItemDrop myDropSystem;
+
     [Header("Level details")]
     [SerializeField] private int level = 1;
     [Range(0f, 1f)]
@@ -17,6 +19,7 @@ public class EnemyStats : EntityStats
         ApplyLevelModifiers();
         base.Start();
         enemy = GetComponent<Enemy>();
+        myDropSystem = GetComponent<ItemDrop>();
 
     }
 

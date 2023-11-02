@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum EquipmentType
@@ -12,6 +13,9 @@ public enum EquipmentType
 public class ItemDataEquipment : ItemData
 {
     public EquipmentType equipmentType;
+
+
+    public ItemEffect[] itemEffects;
     [Space]
     [Header("Major Stats")]
     public int strength;       // increase damage and crit.power
@@ -35,6 +39,10 @@ public class ItemDataEquipment : ItemData
     public int iceDamage;
     public int metalDamage;
 
+
+    [Header("Craft requirements")]
+    public List<InventoryItem> craftingMaterials;
+
     public void AddModifiers()
     {
         PlayerStats playerStats = PlayerManager.instance.player.GetComponent<PlayerStats>();
@@ -57,7 +65,6 @@ public class ItemDataEquipment : ItemData
         playerStats.iceDamage.AddModifiers(iceDamage);
         playerStats.metalDamage.AddModifiers(metalDamage);
     }
-
     public void RemoveModifiers()
     {
         PlayerStats playerStats = PlayerManager.instance.player.GetComponent<PlayerStats>();
@@ -79,5 +86,13 @@ public class ItemDataEquipment : ItemData
         playerStats.fireDamage.RemoveModifiers(fireDamage);
         playerStats.iceDamage.RemoveModifiers(iceDamage);
         playerStats.metalDamage.RemoveModifiers(metalDamage);
+    }
+
+    public void ExecuteItemEffect()
+    {
+        foreach (var item in itemEffects)
+        {
+            item.ExecuteEffect();
+        }
     }
 }

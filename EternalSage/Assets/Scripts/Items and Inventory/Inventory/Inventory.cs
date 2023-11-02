@@ -8,6 +8,8 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
+    public List<ItemData> startingItems;
+
     public List<InventoryItem> equipment;
     public Dictionary<ItemDataEquipment, InventoryItem> equipmentDictionary;
 
@@ -43,7 +45,7 @@ public class Inventory : MonoBehaviour
     {
         inventoryItems = new List<InventoryItem>();
         inventoryDictionary = new Dictionary<ItemData, InventoryItem>();
-       
+
         stashItems = new List<InventoryItem>();
         stashDictionary = new Dictionary<ItemData, InventoryItem>();
 
@@ -52,7 +54,18 @@ public class Inventory : MonoBehaviour
 
         inventoryItemSlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         stashItemSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
-        equipmentSlot =   equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+        equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+
+        AddStartingItems();
+
+    }
+
+    private void AddStartingItems()
+    {
+        for (int i = 0; i < startingItems.Count; i++)
+        {
+            AddItem(startingItems[i]);
+        }
     }
 
     private void Update()
@@ -242,5 +255,70 @@ public class Inventory : MonoBehaviour
         UpdateSlotUI();
     }
 
+    public List<InventoryItem> GetItemList() => inventoryItems;
+
     #endregion
+
+    #region Crafting System
+
+    public bool CanCraft(ItemDataEquipment _itemToCraft, List<InventoryItem> _requiredMaterials)
+    {
+        List<InventoryItem> materialsToRemove = new List<InventoryItem>();
+
+        //Checks the inventory itens to see it can craft or not
+        for (int i = 0; i < _requiredMaterials.Count; i++)
+        {
+            if (inventoryDictionary.TryGetValue(_requiredMaterials[i].data, out InventoryItem stashValue))
+            {
+                //add to used material
+                if(stashValue.stackSize < _requiredMaterials[i].stackSize)
+                {
+                    //Not enough materials
+                    Debug.Log("No enought Mat");
+                    return false;
+                }
+                else
+                {
+                   materialsToRemove.Add(stashValue);
+                }
+
+            }
+            else
+            {
+                //Not enough materials
+                Debug.Log("No enought Mat");
+                return false;
+            }
+        }
+
+        for (int i = 0; i < materialsToRemove.Count; i++)
+        {
+            RemoveItem(materialsToRemove[i].data);
+        }
+        AddItem(_itemToCraft);
+        Debug.Log("CRAFT: " + _itemToCraft.name);
+        return true;
+    }
+
+    #endregion
+
+    #region Item Effects
+
+    public ItemDataEquipment GetEquipment(EquipmentType _equipmentType)
+    {
+        ItemDataEquipment equipedItem = null;
+
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+        {
+            if (item.Key.equipmentType == _equipmentType)
+            {
+                equipedItem = item.Key;
+            }
+        }
+
+        return equipedItem;
+    }
+
+    #endregion
+
 }

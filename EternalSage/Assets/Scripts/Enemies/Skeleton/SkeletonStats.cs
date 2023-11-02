@@ -21,5 +21,6 @@ public class SkeletonStats : EnemyStats
     {
         base.Die();
         skEnemy.Die();
+        myDropSystem.GenerateDrop();
     }
 }

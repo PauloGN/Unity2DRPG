@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f53506e405a2ca4e9f4ea79396fbe27, type: 3}
-  m_Name: Dragon Fire
+  m_Script: {fileID: 11500000, guid: 137c93db9ff4d1d49804acd7f7ee6741, type: 3}
+  m_Name: ThunderStrike
   m_EditorClassIdentifier: 
-  itemType: 0
-  itemName: Dragon Fire
-  icon: {fileID: -978969520, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}

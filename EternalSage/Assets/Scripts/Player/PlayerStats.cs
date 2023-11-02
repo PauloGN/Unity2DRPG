@@ -23,6 +23,7 @@ public class PlayerStats : EntityStats
     {
         base.Die();
         player.Die();
+        GetComponent<PlayerItemDrop>()?.GenerateDrop();
     }
 
 }

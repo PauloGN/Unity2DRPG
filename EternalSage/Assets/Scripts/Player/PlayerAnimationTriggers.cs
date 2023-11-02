@@ -21,6 +21,9 @@ public class PlayerAnimationTriggers : MonoBehaviour
             {
                 EnemyStats _target = enemy.GetComponent<EnemyStats>();
                 playerRef.stats.DoDamage(_target);
+
+                //inventory get weapon and call item effect
+                Inventory.instance.GetEquipment(EquipmentType.Weapon).ExecuteItemEffect();
             }
         }
     }

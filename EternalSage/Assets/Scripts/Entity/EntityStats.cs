@@ -38,7 +38,7 @@ public class EntityStats : MonoBehaviour
     public bool isIgnited;     // Fire damage over time
     public bool isChilled;     // Slow down target reduce armor by 20%
     public bool isShocked;     // reduce accuracy by 20%
-    public bool isDead;
+    public bool isDead { get; private set; }
 
     //Timers
     private float ignitedTimer;                 //controller of status duration of ignited effect 

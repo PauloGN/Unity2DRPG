@@ -15,6 +15,7 @@ MonoBehaviour:
   itemType: 1
   itemName: Iron Sword
   icon: {fileID: 998750072, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  dropChance: 50
   equipmentType: 0
   strength: 0
   agility: 0
@@ -30,3 +31,4 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   metalDamage: 0
+  craftingMaterials: []
