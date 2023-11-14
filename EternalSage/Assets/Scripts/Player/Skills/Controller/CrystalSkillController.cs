@@ -77,6 +77,14 @@ public class CrystalSkillController : MonoBehaviour
             if (enemy != null)
             {
                 playerRef.stats.DoMagicalDamage(enemy.GetComponent<EntityStats>());
+
+                //get an item from the inventory and invoke its effect
+                ItemDataEquipment equippedCape = Inventory.instance.GetEquipment(EquipmentType.Cape);
+
+                if (equippedCape != null) 
+                {
+                    equippedCape.Effect(enemy.transform);
+                }
             }
         }
 

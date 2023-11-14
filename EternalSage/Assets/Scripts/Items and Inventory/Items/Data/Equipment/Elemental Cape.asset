@@ -17,6 +17,8 @@ MonoBehaviour:
   icon: {fileID: 2114130076, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   dropChance: 35
   equipmentType: 3
+  itemEffects:
+  - {fileID: 11400000, guid: 441bd1b3b7834bc4caade92844fefba0, type: 2}
   strength: 0
   agility: 0
   intelligence: 25
@@ -30,7 +32,7 @@ MonoBehaviour:
   magicalResistance: 20
   fireDamage: 5
   iceDamage: 5
-  metalDamage: 5
+  metalDamage: 15
   craftingMaterials:
   - data: {fileID: 11400000, guid: b8a6c2efb8d97c74bbbee93c5a10feab, type: 2}
     stackSize: 1

@@ -88,11 +88,11 @@ public class ItemDataEquipment : ItemData
         playerStats.metalDamage.RemoveModifiers(metalDamage);
     }
 
-    public void ExecuteItemEffect()
+    public void Effect(Transform _enemyPosition)
     {
         foreach (var item in itemEffects)
         {
-            item.ExecuteEffect();
+            item.ExecuteEffect(_enemyPosition);
         }
     }
 }

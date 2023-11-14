@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 137c93db9ff4d1d49804acd7f7ee6741, type: 3}
+  m_Script: {fileID: 11500000, guid: d56dfdef786686a42b025c5546b09da4, type: 3}
   m_Name: ThunderStrike
   m_EditorClassIdentifier: 
+  thunderStrikePrefab: {fileID: 2779039209299720714, guid: 3eba6683e81380241ab694a50e11a8f6, type: 3}

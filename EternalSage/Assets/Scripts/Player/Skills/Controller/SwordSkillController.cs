@@ -118,7 +118,12 @@ public class SwordSkillController : MonoBehaviour
                     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1.0f);
                     foreach (Collider2D hit in colliders)
                     {
-                        player.stats.DoDamage(hit.GetComponent<EntityStats>());
+                        //player.stats.DoDamage(hit.GetComponent<EntityStats>());
+                        Enemy enemy = hit.GetComponent<Enemy>();
+                        if(enemy != null)
+                        {
+                            SwordSkillDamage(enemy);
+                        }
                     }
                 }
             }
@@ -183,6 +188,14 @@ public class SwordSkillController : MonoBehaviour
     {
         player.stats.DoDamage(enemy.GetComponent<EntityStats>());
         enemy.StartCoroutine("FreezeTimeFor", freezeTimeDuration);
+
+        ItemDataEquipment equippedCape = Inventory.instance.GetEquipment(EquipmentType.Cape);
+
+        if (equippedCape != null)
+        {
+            equippedCape.Effect(enemy.transform);
+        }
+
     }
 
     private void SetupTargetForBounce(Collider2D collision)
