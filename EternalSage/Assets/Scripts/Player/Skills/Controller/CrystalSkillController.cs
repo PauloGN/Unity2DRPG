@@ -18,8 +18,6 @@ public class CrystalSkillController : MonoBehaviour
     [SerializeField]private float growSpeed;
     [SerializeField] private LayerMask whatIsEnemy;
 
-
-
     public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMove, float _moveSpeed, Transform _closestTarget)
     {
         playerRef = PlayerManager.instance.player;

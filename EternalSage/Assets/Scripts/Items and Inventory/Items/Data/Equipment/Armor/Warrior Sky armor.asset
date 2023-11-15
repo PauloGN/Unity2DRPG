@@ -10,31 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8346bb6eda72f8847a0a619b4dfab64e, type: 3}
-  m_Name: Elemental Cape
+  m_Name: Warrior Sky armor
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Elemental Cape
-  icon: {fileID: 2114130076, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
-  dropChance: 35
-  equipmentType: 3
+  itemName: Warrior Sky armor
+  icon: {fileID: -1871269579, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 100
+  equipmentType: 1
   itemEffects:
-  - {fileID: 11400000, guid: 441bd1b3b7834bc4caade92844fefba0, type: 2}
-  strength: 0
+  - {fileID: 11400000, guid: ec125f1ff42159e4abe8f534ed158647, type: 2}
+  - {fileID: 11400000, guid: f759997d432985f4db8b3218dfe1d114, type: 2}
+  itemEffectsCoolDown: 2
+  strength: 2
   agility: 0
-  intelligence: 25
+  intelligence: 2
   vitality: 0
   damage: 0
   critChance: 0
   critPower: 0
-  health: 20
+  health: 5
   armor: 0
-  evasion: 55
-  magicalResistance: 20
-  fireDamage: 5
-  iceDamage: 5
-  metalDamage: 15
+  evasion: 15
+  magicalResistance: 0
+  fireDamage: 0
+  iceDamage: 0
+  metalDamage: 0
   craftingMaterials:
-  - data: {fileID: 11400000, guid: b8a6c2efb8d97c74bbbee93c5a10feab, type: 2}
-    stackSize: 1
   - data: {fileID: 11400000, guid: 4d069f960a6386c4f8bd1133d103ff6f, type: 2}
-    stackSize: 1
+    stackSize: 5

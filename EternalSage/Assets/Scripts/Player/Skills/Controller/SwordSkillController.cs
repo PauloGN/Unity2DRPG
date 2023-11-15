@@ -187,7 +187,7 @@ public class SwordSkillController : MonoBehaviour
     private void SwordSkillDamage(Enemy enemy)
     {
         player.stats.DoDamage(enemy.GetComponent<EntityStats>());
-        enemy.StartCoroutine("FreezeTimeFor", freezeTimeDuration);
+        enemy.FreezeTimeCall(freezeTimeDuration);
 
         ItemDataEquipment equippedCape = Inventory.instance.GetEquipment(EquipmentType.Cape);
 

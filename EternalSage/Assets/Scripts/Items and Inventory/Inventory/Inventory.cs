@@ -29,6 +29,8 @@ public class Inventory : MonoBehaviour
     private UI_ItemSlot[] inventoryItemSlot;
     private UI_ItemSlot[] stashItemSlot;
     private UI_EquipmentSlot[] equipmentSlot;
+    //Controllers
+    private float lastTimeUsedArmor;
 
     private void Awake()
     {
@@ -322,9 +324,10 @@ public class Inventory : MonoBehaviour
 
     #endregion
 
+    #region USE ITEMS OR EFFECTS FROM THEM
     public void UseFlask()
     {
-        ItemDataEquipment equipedItem = GetEquipment(EquipmentType.Flask);
+        ItemDataEquipment equipedItem = GetEquipment(EquipmentType.HealthFlask);
 
         if (equipedItem != null) 
         { 
@@ -334,7 +337,7 @@ public class Inventory : MonoBehaviour
 
             for (int i = 0; i < equipmentSlot.Length; ++i)
             {
-               if (equipmentSlot[i].slotType == EquipmentType.Flask)
+               if (equipmentSlot[i].slotType == EquipmentType.HealthFlask)
                {
                    equipmentSlot[i].CleanUpSlot();
                }
@@ -342,5 +345,46 @@ public class Inventory : MonoBehaviour
 
         }
     }
+    public void UseMagicPosion()
+    {
+        ItemDataEquipment equipedItem = GetEquipment(EquipmentType.MagicPotion);
 
+        if (equipedItem != null)
+        {
+            equipedItem.Effect(transform);
+            UnequipItem(equipedItem);
+            RemoveItem(equipedItem);
+
+            for (int i = 0; i < equipmentSlot.Length; ++i)
+            {
+                if (equipmentSlot[i].slotType == EquipmentType.MagicPotion)
+                {
+                    equipmentSlot[i].CleanUpSlot();
+                }
+            }
+
+        }
+    }
+
+    public bool CanUseArmor()
+    {
+        //Check if there is an armor equipped
+        ItemDataEquipment currentArmor = Inventory.instance.GetEquipment(EquipmentType.Armor);
+        if(currentArmor != null)
+        {
+            //go over the  time to see if the effect is on cooldown
+            if (Time.time > lastTimeUsedArmor + currentArmor.itemEffectsCoolDown)
+            {
+                lastTimeUsedArmor = Time.time;
+                currentArmor.Effect(PlayerManager.instance.player.transform);
+                Debug.Log("Armor EFFECT");
+                return true;
+            }
+        }
+
+        Debug.Log("Armor on Cooldown");
+        return false;
+    }
+
+    #endregion
 }

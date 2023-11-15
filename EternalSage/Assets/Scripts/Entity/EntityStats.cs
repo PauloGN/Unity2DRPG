@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EntityStats : MonoBehaviour
@@ -87,6 +88,20 @@ public class EntityStats : MonoBehaviour
         {
             ApplyIgniteDmgAndBurn();
         }
+    }
+
+
+    public virtual void IncreaseStatBy(int _modifier, float _duration, Stat _statToModify)
+    {
+        //Start coroutine for increase a given stats
+        StartCoroutine(StatModCoroutine(_modifier, _duration, _statToModify));
+    }
+
+    private IEnumerator StatModCoroutine(int _modifier, float _duration, Stat _statToModify)
+    {
+        _statToModify.AddModifiers(_modifier);
+        yield return new WaitForSeconds(_duration);
+        _statToModify.RemoveModifiers(_modifier);
     }
 
 

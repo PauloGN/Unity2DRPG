@@ -7,7 +7,8 @@ public enum EquipmentType
     Armor,
     Amulet,
     Cape,
-    Flask
+    HealthFlask,
+    MagicPotion
 }
 
 [CreateAssetMenu(fileName = "New Item Data", menuName = "Data/Equipment")]
@@ -15,8 +16,9 @@ public class ItemDataEquipment : ItemData
 {
     public EquipmentType equipmentType;
 
-
     public ItemEffect[] itemEffects;
+    public float itemEffectsCoolDown;
+
     [Space]
     [Header("Major Stats")]
     public int strength;       // increase damage and crit.power
@@ -39,7 +41,6 @@ public class ItemDataEquipment : ItemData
     public int fireDamage;
     public int iceDamage;
     public int metalDamage;
-
 
     [Header("Craft requirements")]
     public List<InventoryItem> craftingMaterials;
