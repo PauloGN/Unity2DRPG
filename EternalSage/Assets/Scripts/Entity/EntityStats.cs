@@ -310,6 +310,21 @@ public class EntityStats : MonoBehaviour
         }
     }
 
+    public virtual void IncreaseHealthBy(int _heal)
+    {
+        currentHelth += _heal;
+
+        if(currentHelth > GetMaxHealthValue())
+        {
+            currentHelth = GetMaxHealthValue();
+        }
+
+        if (onHealthChanged != null)
+        {
+            onHealthChanged();
+        }
+    }
+
     protected virtual void Die()
     {
         isDead = true;

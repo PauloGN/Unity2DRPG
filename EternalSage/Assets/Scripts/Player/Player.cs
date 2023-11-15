@@ -153,7 +153,6 @@ public class Player : Entity
         {
             skill.crystalSkill.CanUseSkill();
         }
-        //Debug
     }
 
     public override void SlowEntityBy(float _slowPercentage, float _slowDuration)

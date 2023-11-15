@@ -53,7 +53,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        if (item.data == null) { return; }
+        if (item == null || item.data == null) { return; }
 
         if (Input.GetKey(KeyCode.LeftAlt))
         {
@@ -65,6 +65,12 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
         {
             Debug.Log("Equipe new item " + item.data.name);
             Inventory.instance.EquipeItem(item.data);
+
+            PlayerStats stats = (PlayerStats)PlayerManager.instance.player.stats;
+            if (stats != null && stats.IsHealthLessThan60Percent())
+            {
+                Inventory.instance.UseFlask();
+            }
         }
     }
 }

@@ -14,12 +14,18 @@ public class AimController : MonoBehaviour
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             transform.position = new Vector3(mousePosition.x, mousePosition.y, transform.position.z);
         }
-        else if(Input.GetButton("AimSw"))
+        else if (Input.GetButton("AimSw"))
         {
             //Fixing auto input
             //https://www.youtube.com/watch?v=tRsJchGPrW8&ab_channel=CursedCode
             float rightStickX = Input.GetAxisRaw("RightStickHorizontal");
             float rightStickY = Input.GetAxisRaw("RightStickVertical");
+
+            if (rightStickY != 0)
+            {
+                Debug.Log(rightStickY);
+            }
+
             Vector2 aimDirection = new Vector2(rightStickX, rightStickY).normalized;
             Vector3 newPosition = transform.position; // Convert to Vector3
             newPosition += (Vector3)aimDirection * aimingSpeed * Time.deltaTime; // Convert back to Vector2

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerStats : EntityStats
@@ -17,8 +18,15 @@ public class PlayerStats : EntityStats
     {
         base.TakeDamage(_dmg);
         player.DamageInpact();
+
+        if (IsHealthLessThan60Percent())
+        {
+           Inventory.instance.UseFlask();
+        }
     }
 
+    public bool IsHealthLessThan60Percent() => (currentHelth <= (GetMaxHealthValue() * .6f));
+        
     protected override void Die()
     {
         base.Die();

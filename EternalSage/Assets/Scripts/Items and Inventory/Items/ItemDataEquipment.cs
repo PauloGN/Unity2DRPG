@@ -6,7 +6,8 @@ public enum EquipmentType
     Weapon,
     Armor,
     Amulet,
-    Cape
+    Cape,
+    Flask
 }
 
 [CreateAssetMenu(fileName = "New Item Data", menuName = "Data/Equipment")]

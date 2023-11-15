@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
@@ -320,5 +321,26 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
+
+    public void UseFlask()
+    {
+        ItemDataEquipment equipedItem = GetEquipment(EquipmentType.Flask);
+
+        if (equipedItem != null) 
+        { 
+            equipedItem.Effect(transform);
+            UnequipItem(equipedItem);
+            RemoveItem(equipedItem);
+
+            for (int i = 0; i < equipmentSlot.Length; ++i)
+            {
+               if (equipmentSlot[i].slotType == EquipmentType.Flask)
+               {
+                   equipmentSlot[i].CleanUpSlot();
+               }
+            }
+
+        }
+    }
 
 }
