@@ -51,12 +51,47 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
         itemText.text = "";
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
+        if (item == null || item.data == null) { return; }
+
+        if (Input.GetKey(KeyCode.LeftAlt))
+        {
+            Inventory.instance.RemoveItem(item.data);
+            return;
+        }
+
         if (item.data.itemType == ItemType.Equipment)
         {
             Debug.Log("Equipe new item " + item.data.name);
             Inventory.instance.EquipeItem(item.data);
+
+            //chek if the equipped item is a flask
+            FlaskLogic();
+        }
+    }
+
+    private static void FlaskLogic()
+    {
+        ItemDataEquipment flask = Inventory.instance.GetEquipment(EquipmentType.HealthFlask);
+        if (flask != null)
+        {
+            //When equipping an item see if health is less then 60% if so and it is a flask use it
+            PlayerStats stats = (PlayerStats)PlayerManager.instance.player.stats;
+            if (stats != null && stats.IsHealthLessThanXPercent_Default60())
+            {
+                Inventory.instance.UseFlask();
+            }
+            return;
+        }
+
+        ItemDataEquipment BuffFlask = Inventory.instance.GetEquipment(EquipmentType.MagicPotion);
+        if (flask != BuffFlask)
+        {
+
+            Debug.Log("BUUUFFFFF");
+
+            return;
         }
     }
 }

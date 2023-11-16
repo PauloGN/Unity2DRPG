@@ -1,4 +1,4 @@
-using TreeEditor;
+using System.Collections;
 using UnityEngine;
 
 public class EntityStats : MonoBehaviour
@@ -38,7 +38,10 @@ public class EntityStats : MonoBehaviour
     public bool isIgnited;     // Fire damage over time
     public bool isChilled;     // Slow down target reduce armor by 20%
     public bool isShocked;     // reduce accuracy by 20%
-    public bool isDead;
+    public bool isDead
+    {
+        get; private set;
+    }
 
     //Timers
     private float ignitedTimer;                 //controller of status duration of ignited effect 
@@ -85,6 +88,20 @@ public class EntityStats : MonoBehaviour
         {
             ApplyIgniteDmgAndBurn();
         }
+    }
+
+
+    public virtual void IncreaseStatBy(int _modifier, float _duration, Stat _statToModify)
+    {
+        //Start coroutine for increase a given stats
+        StartCoroutine(StatModCoroutine(_modifier, _duration, _statToModify));
+    }
+
+    private IEnumerator StatModCoroutine(int _modifier, float _duration, Stat _statToModify)
+    {
+        _statToModify.AddModifiers(_modifier);
+        yield return new WaitForSeconds(_duration);
+        _statToModify.RemoveModifiers(_modifier);
     }
 
 
@@ -156,7 +173,7 @@ public class EntityStats : MonoBehaviour
 
         bool canApplyIgnite = !isIgnited && !isChilled && !isShocked;
         bool canApplyChill = !isIgnited && !isChilled && !isShocked;
-        bool canApplyShock= !isIgnited && !isChilled;
+        bool canApplyShock = !isIgnited && !isChilled;
 
 
         //Duration controller
@@ -212,7 +229,7 @@ public class EntityStats : MonoBehaviour
         return totalMagicalDmg;
     }
     public void SetupIgniteDamage(int _dmg) => igniteDmg = _dmg;
-    public void SetupThundStrike(int _dmg)=> thunderDamage = _dmg;
+    public void SetupThundStrike(int _dmg) => thunderDamage = _dmg;
     private void HitNearestTargetWithThunderStrike()
     {
         //Find closest target among the enemies
@@ -265,7 +282,7 @@ public class EntityStats : MonoBehaviour
     public virtual void DoDamage(EntityStats _targetStats)
     {
         //Check evasion 
-        if (TargetCanAvoidAttack(_targetStats))
+        if (_targetStats == null || TargetCanAvoidAttack(_targetStats))
         {
             return;
         }
@@ -284,12 +301,12 @@ public class EntityStats : MonoBehaviour
         _targetStats.TakeDamage(totalDamage);
 
 
-       // DoMagicalDamage(_targetStats);
+        // DoMagicalDamage(_targetStats);
     }
 
     public virtual void TakeDamage(int _dmg)
     {
-       DecreaseHealthBy(_dmg);
+        DecreaseHealthBy(_dmg);
 
         if (currentHelth <= 0 && !isDead)
         {
@@ -308,9 +325,24 @@ public class EntityStats : MonoBehaviour
         }
     }
 
+    public virtual void IncreaseHealthBy(int _heal)
+    {
+        currentHelth += _heal;
+
+        if(currentHelth > GetMaxHealthValue())
+        {
+            currentHelth = GetMaxHealthValue();
+        }
+
+        if (onHealthChanged != null)
+        {
+            onHealthChanged();
+        }
+    }
+
     protected virtual void Die()
     {
-        isDead = true; 
+        isDead = true;
         Debug.Log("Entity Die aewwwwwww");
     }
 
@@ -353,7 +385,7 @@ public class EntityStats : MonoBehaviour
     {
         int totalCriticalChance = critChance.GetValue() + agility.GetValue();
 
-        if(Random.Range(0, 100) <= totalCriticalChance)
+        if (Random.Range(0, 100) <= totalCriticalChance)
         {
             return true;
         }

@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8346bb6eda72f8847a0a619b4dfab64e, type: 3}
-  m_Name: Storm Sword
+  m_Script: {fileID: 11500000, guid: 3c5f64ec23d395b46b25a4c39ee62532, type: 3}
+  m_Name: FireBuff
   m_EditorClassIdentifier: 
-  itemType: 1
-  itemName: Storm Sword
-  icon: {fileID: 678717410, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
-  equipmentType: 0
+  buffAmount: 15
+  buffDuration: 12
+  buffType: 4

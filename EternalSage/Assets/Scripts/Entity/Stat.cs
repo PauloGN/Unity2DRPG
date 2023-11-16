@@ -33,6 +33,6 @@ public class Stat
     }
     public void RemoveModifiers(int _modifier)
     {
-        modifiers.RemoveAt(_modifier);
+        modifiers.Remove(_modifier);
     }
 }

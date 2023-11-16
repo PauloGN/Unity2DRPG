@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
 
     public static Inventory instance;
+
+    public List<ItemData> startingItems;
 
     public List<InventoryItem> equipment;
     public Dictionary<ItemDataEquipment, InventoryItem> equipmentDictionary;
@@ -20,12 +23,14 @@ public class Inventory : MonoBehaviour
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
     [SerializeField] private Transform stashSlotParent;
-
+    [SerializeField] private Transform equipmentSlotParent;
 
     //UI controllers
     private UI_ItemSlot[] inventoryItemSlot;
     private UI_ItemSlot[] stashItemSlot;
-
+    private UI_EquipmentSlot[] equipmentSlot;
+    //Controllers
+    private float lastTimeUsedArmor;
 
     private void Awake()
     {
@@ -43,7 +48,7 @@ public class Inventory : MonoBehaviour
     {
         inventoryItems = new List<InventoryItem>();
         inventoryDictionary = new Dictionary<ItemData, InventoryItem>();
-       
+
         stashItems = new List<InventoryItem>();
         stashDictionary = new Dictionary<ItemData, InventoryItem>();
 
@@ -52,6 +57,18 @@ public class Inventory : MonoBehaviour
 
         inventoryItemSlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         stashItemSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+
+        AddStartingItems();
+
+    }
+
+    private void AddStartingItems()
+    {
+        for (int i = 0; i < startingItems.Count; i++)
+        {
+            AddItem(startingItems[i]);
+        }
     }
 
     private void Update()
@@ -96,17 +113,21 @@ public class Inventory : MonoBehaviour
 
         equipment.Add(newItem);
         equipmentDictionary.Add(newEquipment, newItem);
+        //Modifiers are aplied
+        newEquipment.AddModifiers();
+
         RemoveItem(_item);
 
         UpdateSlotUI();
     }
 
-    private void UnequipItem(ItemDataEquipment _itemToRemove)
+    public void UnequipItem(ItemDataEquipment _itemToRemove)
     {
         if (equipmentDictionary.TryGetValue(_itemToRemove, out InventoryItem value))
         {
             equipment.Remove(value);
             equipmentDictionary.Remove(_itemToRemove);
+            _itemToRemove.RemoveModifiers();
         }
     }
 
@@ -115,6 +136,18 @@ public class Inventory : MonoBehaviour
     #region ADD, REMOVE, and UPDATE ITEMS
     private void UpdateSlotUI(bool removinglast = false)///********
     {
+        //equipe to equipment inventory
+        for (int i = 0; i < equipmentSlot.Length; ++i)
+        {
+            foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+            {
+                if (item.Key.equipmentType == equipmentSlot[i].slotType)
+                {
+                    equipmentSlot[i].UpdateSlot(item.Value);
+                }
+            }
+        }
+
         for (int i = 0; i < inventoryItemSlot.Length; ++i)
         {
             inventoryItemSlot[i].CleanUpSlot();
@@ -223,6 +256,134 @@ public class Inventory : MonoBehaviour
         }
 
         UpdateSlotUI();
+    }
+
+    public List<InventoryItem> GetItemList() => inventoryItems;
+
+    #endregion
+
+    #region Crafting System
+
+    public bool CanCraft(ItemDataEquipment _itemToCraft, List<InventoryItem> _requiredMaterials)
+    {
+        List<InventoryItem> materialsToRemove = new List<InventoryItem>();
+
+        //Checks the inventory itens to see it can craft or not
+        for (int i = 0; i < _requiredMaterials.Count; i++)
+        {
+            if (inventoryDictionary.TryGetValue(_requiredMaterials[i].data, out InventoryItem stashValue))
+            {
+                //add to used material
+                if(stashValue.stackSize < _requiredMaterials[i].stackSize)
+                {
+                    //Not enough materials
+                    Debug.Log("No enought Mat");
+                    return false;
+                }
+                else
+                {
+                   materialsToRemove.Add(stashValue);
+                }
+
+            }
+            else
+            {
+                //Not enough materials
+                Debug.Log("No enought Mat");
+                return false;
+            }
+        }
+
+        for (int i = 0; i < materialsToRemove.Count; i++)
+        {
+            RemoveItem(materialsToRemove[i].data);
+        }
+        AddItem(_itemToCraft);
+        Debug.Log("CRAFT: " + _itemToCraft.name);
+        return true;
+    }
+
+    #endregion
+
+    #region Item Effects
+
+    public ItemDataEquipment GetEquipment(EquipmentType _equipmentType)
+    {
+        ItemDataEquipment equipedItem = null;
+
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+        {
+            if (item.Key.equipmentType == _equipmentType)
+            {
+                equipedItem = item.Key;
+            }
+        }
+
+        return equipedItem;
+    }
+
+    #endregion
+
+    #region USE ITEMS OR EFFECTS FROM THEM
+    public void UseFlask()
+    {
+        ItemDataEquipment equipedItem = GetEquipment(EquipmentType.HealthFlask);
+
+        if (equipedItem != null) 
+        { 
+            equipedItem.Effect(transform);
+            UnequipItem(equipedItem);
+            RemoveItem(equipedItem);
+
+            for (int i = 0; i < equipmentSlot.Length; ++i)
+            {
+               if (equipmentSlot[i].slotType == EquipmentType.HealthFlask)
+               {
+                   equipmentSlot[i].CleanUpSlot();
+               }
+            }
+
+        }
+    }
+    public void UseMagicPosion()
+    {
+        ItemDataEquipment equipedItem = GetEquipment(EquipmentType.MagicPotion);
+
+        if (equipedItem != null)
+        {
+            equipedItem.Effect(transform);
+            UnequipItem(equipedItem);
+            RemoveItem(equipedItem);
+
+            for (int i = 0; i < equipmentSlot.Length; ++i)
+            {
+                if (equipmentSlot[i].slotType == EquipmentType.MagicPotion)
+                {
+                    equipmentSlot[i].CleanUpSlot();
+                }
+            }
+
+        }
+    }
+
+    public bool CanUseArmor()
+    {
+        //Check if there is an armor equipped
+        ItemDataEquipment currentArmor = Inventory.instance.GetEquipment(EquipmentType.Armor);
+        if(currentArmor != null)
+        {
+            //go over the  time to see if the effect is on cooldown
+            if (Time.time > lastTimeUsedArmor + currentArmor.itemEffectsCoolDown)
+            {
+                lastTimeUsedArmor = Time.time;
+                currentArmor.Effect(PlayerManager.instance.player.transform);
+                Debug.Log("Armor EFFECT");
+                return true;
+            }
+        }
+
+        Debug.Log("Armor on Cooldown");
+        return false;
     }
 
     #endregion
