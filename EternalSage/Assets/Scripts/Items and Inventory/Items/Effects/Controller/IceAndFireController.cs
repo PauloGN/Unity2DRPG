@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IceAndFire_Controller : FX_Controller
+public class IceAndFireController : FX_Controller
 {
     protected override void OnTriggerEnter2D(Collider2D collision)
     {

@@ -28,6 +28,4 @@ public class UI : MonoBehaviour
             _menu.SetActive(true);
         }
     }
-
-
 }

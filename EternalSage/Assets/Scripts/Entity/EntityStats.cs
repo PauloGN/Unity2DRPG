@@ -1,6 +1,24 @@
 using System.Collections;
 using UnityEngine;
 
+public enum Stats_Type
+{
+    ST_Strengh,
+    ST_Agility,
+    ST_Intelligence,
+    ST_Vitality,
+    ST_Damage,
+    ST_CritChance,
+    ST_critPower,
+    ST_Armor,
+    ST_Health,
+    ST_MagicRes,
+    ST_Evasion,
+    ST_FireDmg,
+    ST_MetalDmg,
+    ST_IceDmg
+}
+
 public class EntityStats : MonoBehaviour
 {
     EntityFX fx;
@@ -402,6 +420,29 @@ public class EntityStats : MonoBehaviour
     public int GetMaxHealthValue()
     {
         return maxHealth.GetValue() + (vitality.GetValue() * 5);
+    }
+
+    public Stat GetStat(Stats_Type _statType)
+    {
+        switch (_statType)
+        {
+            case Stats_Type.ST_Strengh: return strength;
+            case Stats_Type.ST_Agility: return agility;
+            case Stats_Type.ST_Intelligence: return intelligence;
+            case Stats_Type.ST_Vitality: return vitality;
+            case Stats_Type.ST_Damage: return damage;
+            case Stats_Type.ST_CritChance: return critChance;
+            case Stats_Type.ST_critPower: return critPower;
+            case Stats_Type.ST_Armor: return armor;
+            case Stats_Type.ST_Health: return maxHealth;
+            case Stats_Type.ST_MagicRes: return magicalResistance;
+            case Stats_Type.ST_Evasion: return evasion;
+            case Stats_Type.ST_FireDmg: return fireDamage;
+            case Stats_Type.ST_MetalDmg: return metalDamage;
+            case Stats_Type.ST_IceDmg: return iceDamage;
+            default:
+                return maxHealth;
+        }
     }
     #endregion
 }
