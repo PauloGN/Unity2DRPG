@@ -45,6 +45,10 @@ public class ItemDataEquipment : ItemData
     [Header("Craft requirements")]
     public List<InventoryItem> craftingMaterials;
 
+    [Header("Description lengh set up")]
+    private int descriptionLength;
+    [SerializeField]private int minDescLenght = 5;
+
     public void AddModifiers()
     {
         PlayerStats playerStats = PlayerManager.instance.player.GetComponent<PlayerStats>();
@@ -95,6 +99,59 @@ public class ItemDataEquipment : ItemData
         foreach (var item in itemEffects)
         {
             item.ExecuteEffect(_enemyPosition);
+        }
+    }
+
+    public override string GetDescription()
+    {
+        sb.Length = 0;
+        descriptionLength = 0;
+
+        AddItemDescription(strength, "Strength");
+        AddItemDescription(agility, "Agility");
+        AddItemDescription(intelligence, "Intelligence");
+        AddItemDescription(vitality, "Vitality");
+
+        AddItemDescription(damage, "Damage");
+        AddItemDescription(critChance, "Crit. Chance");
+        AddItemDescription(critPower, "Crit. Power");
+
+        AddItemDescription(health, "Health");
+        AddItemDescription(armor, "Armor");
+        AddItemDescription(evasion, "Evasion");
+        AddItemDescription(magicalResistance, "Magical Resistance");
+
+        AddItemDescription(fireDamage, "Fire Damage");
+        AddItemDescription(iceDamage, "Ice Damage");
+        AddItemDescription(metalDamage, "Metal Damage");
+
+        if (descriptionLength < minDescLenght)
+        {
+            for (int i = 0; i < minDescLenght - descriptionLength; ++i)
+            {
+                sb.AppendLine();
+                sb.Append(" ");
+            }
+        }
+
+        return sb.ToString();
+    }
+
+    private void AddItemDescription(int _value, string _name)
+    {
+        if(_value != 0)
+        {
+            if (sb.Length > 0)
+            {
+                sb.AppendLine();
+            }
+
+            if(_value > 0)
+            {
+                sb.Append("+ " + _value + " " + _name);
+            }
+
+            descriptionLength++;
         }
     }
 }

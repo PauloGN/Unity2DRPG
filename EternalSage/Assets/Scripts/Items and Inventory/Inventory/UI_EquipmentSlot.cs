@@ -17,7 +17,10 @@ public class UI_EquipmentSlot : UI_ItemSlot
     {
         if (item == null || item.data == null) { return; }
 
+        if (!Inventory.instance.CanAddItem()) { return; }
+
         //Inventory unequip item
+        ui.itemToolTip.HideToolTip();
         Inventory.instance.UnequipItem(item.data as ItemDataEquipment);
         Inventory.instance.AddItem(item.data as ItemDataEquipment);
         CleanUpSlot();

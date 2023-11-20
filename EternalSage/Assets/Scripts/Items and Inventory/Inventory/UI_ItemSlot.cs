@@ -3,12 +3,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
+public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image itemImage;
     [SerializeField] private TextMeshProUGUI itemText;
 
     public InventoryItem item;
+    protected UI ui;
+
+    private void Start()
+    {
+        if(ui == null)
+        {
+           ui = GetComponentInParent<UI>();
+        }
+    }
 
 
     public void UpdateSlot(InventoryItem _newItem, bool lastItem = false)
@@ -66,6 +75,9 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
             Debug.Log("Equipe new item " + item.data.name);
             Inventory.instance.EquipeItem(item.data);
 
+            //hide info when equip
+            ui.itemToolTip.HideToolTip();
+
             //chek if the equipped item is a flask
             FlaskLogic();
         }
@@ -85,14 +97,32 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
             return;
         }
 
-        ItemDataEquipment BuffFlask = Inventory.instance.GetEquipment(EquipmentType.MagicPotion);
-        if (flask != BuffFlask)
-        {
+        //ItemDataEquipment BuffFlask = Inventory.instance.GetEquipment(EquipmentType.MagicPotion);
+        //if (flask != BuffFlask)
+        //{
 
-            Debug.Log("BUUUFFFFF");
+        //    Debug.Log("BUUUFFFFF");
 
-            return;
-        }
+        //    return;
+        //}
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item == null || item.data == null) { return; }
+
+        ui.itemToolTip.ShowToolTip(item.data as ItemDataEquipment);
+
+       // throw new System.NotImplementedException();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null || item.data == null) { return; }
+
+        ui.itemToolTip.HideToolTip();
+
+        // throw new System.NotImplementedException();
     }
 }
 

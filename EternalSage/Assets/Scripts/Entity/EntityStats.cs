@@ -120,6 +120,9 @@ public class EntityStats : MonoBehaviour
         _statToModify.AddModifiers(_modifier);
         yield return new WaitForSeconds(_duration);
         _statToModify.RemoveModifiers(_modifier);
+        //update stats
+        Debug.LogWarning("Remove buff");
+        Inventory.instance.UpdateStatsInfo();
     }
 
 
