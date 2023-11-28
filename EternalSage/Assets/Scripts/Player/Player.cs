@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 
 public class Player : Entity
@@ -29,6 +30,7 @@ public class Player : Entity
 
     //controllers
     public bool isBusy { get; private set; } = false;
+    public bool readyToRemove { get; private set; } = false;
 
     #region FSM System
     public PlayerStateMachine stateMachine
@@ -149,10 +151,6 @@ public class Player : Entity
         stateMachine.currenState.Update();
         //Inputs
         CheckInputForDash();
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            skill.crystalSkill.CanUseSkill();
-        }
     }
 
     public override void SlowEntityBy(float _slowPercentage, float _slowDuration)
@@ -218,6 +216,8 @@ public class Player : Entity
         stateMachine.ChangeState(deadState);
     }
 
+    #region Player Skills
+
     public void UltimateSkill()
     {
         Debug.Log("AEWWWWWWWWWWW");
@@ -226,4 +226,32 @@ public class Player : Entity
             stateMachine.ChangeState(blackhole);
         }
     }
+
+    //https://stackoverflow.com/questions/62707625/unity-input-system-button-triggers-multiple-times
+    //Gatantee that action will be called once
+    public void SpellElements(InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            skill.crystalSkill.CanUseSkill();
+        }
+    }
+
+    //send a sing to UI_ItemSlot to say if player has intention to remove an item from inventory
+    //input system is going to set the bool variable true or false and the variable will be consulted by the script to know weather or not it is being pressed
+    public void SetSignToRemove(InputAction.CallbackContext value)
+    {
+       if (value.started )
+       {
+           readyToRemove = true;
+           Debug.LogWarning("Downn....readyToRemove");
+       }
+       else if(!value.action.IsPressed())
+       {
+           readyToRemove = false;
+           Debug.LogWarning(".........not readyToRemove");
+       }            
+    }
+
+    #endregion
 }

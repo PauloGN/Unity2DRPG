@@ -8,6 +8,8 @@ public class BlackholeSkillController : MonoBehaviour
     [SerializeField] private List<KeyCode> keyCodeList;
     [SerializeField] private List<KeyCode> gamePadList;
 
+    [SerializeField] private float rotationSpeed = 25.0f;
+
     private float maxSize;
     private float growSpeed;
     private float shrinkSpeed;
@@ -38,6 +40,8 @@ public class BlackholeSkillController : MonoBehaviour
 
     private void Update()
     {
+
+        transform.Rotate(Vector3.forward, Time.deltaTime * rotationSpeed);
 
         cloneAttackTimer -= Time.deltaTime;
         blackHoleTimer -= Time.deltaTime;
@@ -124,11 +128,11 @@ public class BlackholeSkillController : MonoBehaviour
 
             if (Random.Range(0, 100) > 50)
             {
-                Xoffset = 2.0f;
+                Xoffset = 1.3f;
             }
             else
             {
-                Xoffset = -2.0f;
+                Xoffset = -1.3f;
             }
 
             if (SkillManager.instance.clone.crystalInsteadOfClone)

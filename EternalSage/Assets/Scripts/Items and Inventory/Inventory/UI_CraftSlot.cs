@@ -1,14 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class UI_CraftSlot : UI_ItemSlot
 {
 
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     private void OnEnable()
     {
         UpdateSlot(item);
+    }
+
+    public void SetupCraftSlot(ItemDataEquipment data)
+    {
+        if(data == null) { return; }
+        item.data = data;
+
+        itemImage.sprite = data.icon;
+        itemText.text = data.itemName;
     }
 
     public override void OnPointerDown(PointerEventData eventData)
@@ -16,7 +27,7 @@ public class UI_CraftSlot : UI_ItemSlot
         // inventory craft data
         ItemDataEquipment craftData = item.data as ItemDataEquipment;
 
-       if(Inventory.instance.CanCraft(craftData, craftData.craftingMaterials))
+        if (Inventory.instance.CanCraft(craftData, craftData.craftingMaterials))
         {
             // play sound of FX
         }

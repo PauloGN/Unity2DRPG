@@ -321,7 +321,6 @@ public class EntityStats : MonoBehaviour
         totalDamage = CheckTargetArmor(_targetStats, totalDamage);
         _targetStats.TakeDamage(totalDamage);
 
-
         // DoMagicalDamage(_targetStats);
     }
 
@@ -370,6 +369,7 @@ public class EntityStats : MonoBehaviour
     #region Stats Check
     private int CheckTargetArmor(EntityStats _targetStats, int totalDamage)
     {
+        int minDamage = Mathf.RoundToInt(totalDamage * 0.15f);
         //Means if the target being attacke is chilled  its armor is only 80% efficient
         if (_targetStats.isChilled)
         {
@@ -381,7 +381,7 @@ public class EntityStats : MonoBehaviour
             totalDamage -= _targetStats.armor.GetValue();
         }
 
-        totalDamage = Mathf.Clamp(totalDamage, 0, int.MaxValue);
+        totalDamage = Mathf.Clamp(totalDamage, minDamage, int.MaxValue);
         return totalDamage;
     }
     private bool TargetCanAvoidAttack(EntityStats _targetStats)

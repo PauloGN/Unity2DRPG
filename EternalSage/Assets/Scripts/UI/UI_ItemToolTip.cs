@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class UI_ItemToolTip : MonoBehaviour
 {
-
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemTypeText;
     [SerializeField] private TextMeshProUGUI itemDescriptionText;
@@ -16,7 +15,7 @@ public class UI_ItemToolTip : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+    
     }
 
     // Update is called once per frame

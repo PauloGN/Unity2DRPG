@@ -1,24 +1,24 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image itemImage;
-    [SerializeField] private TextMeshProUGUI itemText;
+    [SerializeField] protected Image itemImage;
+    [SerializeField] protected TextMeshProUGUI itemText;
 
     public InventoryItem item;
     protected UI ui;
 
-    private void Start()
+    protected virtual void Start()
     {
         if(ui == null)
         {
            ui = GetComponentInParent<UI>();
         }
     }
-
 
     public void UpdateSlot(InventoryItem _newItem, bool lastItem = false)
     {
@@ -64,9 +64,10 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         if (item == null || item.data == null) { return; }
 
-        if (Input.GetKey(KeyCode.LeftAlt))
+        if (PlayerManager.instance.player.readyToRemove)
         {
             Inventory.instance.RemoveItem(item.data);
+            ui.itemToolTip.HideToolTip();
             return;
         }
 
@@ -111,6 +112,13 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     {
         if (item == null || item.data == null) { return; }
 
+        if (ui.itemToolTip == null)
+        {
+            ui.ToggleSlotToolTip(true);
+        }
+
+        if(ui == null || ui.itemToolTip == null) { return; }
+
         ui.itemToolTip.ShowToolTip(item.data as ItemDataEquipment);
 
        // throw new System.NotImplementedException();
@@ -119,11 +127,13 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHand
     public void OnPointerExit(PointerEventData eventData)
     {
         if (item == null || item.data == null) { return; }
+        if (ui == null || ui.itemToolTip == null) { return; }
 
         ui.itemToolTip.HideToolTip();
 
         // throw new System.NotImplementedException();
     }
+
 }
 
 /*
