@@ -24,12 +24,15 @@ public class UI_CraftSlot : UI_ItemSlot
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        // inventory craft data
-        ItemDataEquipment craftData = item.data as ItemDataEquipment;
 
-        if (Inventory.instance.CanCraft(craftData, craftData.craftingMaterials))
-        {
-            // play sound of FX
-        }
+        ui.CraftWindow.SetupCraftWindow(item.data as ItemDataEquipment);
+
+        //// inventory craft data
+        //ItemDataEquipment craftData = item.data as ItemDataEquipment;
+
+        //if (Inventory.instance.CanCraft(craftData, craftData.craftingMaterials))
+        //{
+        //    // play sound of FX
+        //}
     }
 }

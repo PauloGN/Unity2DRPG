@@ -43,6 +43,10 @@ public class UI : MonoBehaviour
         //}
     }
 
+    //Assign on inspector
+    public UI_CraftWindow CraftWindow;
+
+
     public void SwitchTo(GameObject _menu)
     {
         for (int i = 0; i < transform.childCount; i++)
