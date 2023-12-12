@@ -15,7 +15,7 @@ public class UI_ItemToolTip : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    
+        itemDescriptionText.text = "";
     }
 
     // Update is called once per frame

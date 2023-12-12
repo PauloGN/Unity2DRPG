@@ -1,3 +1,4 @@
+using System.Drawing;
 using UnityEngine.EventSystems;
 
 public class UI_CraftSlot : UI_ItemSlot
@@ -10,7 +11,7 @@ public class UI_CraftSlot : UI_ItemSlot
 
     private void OnEnable()
     {
-        UpdateSlot(item);
+       //UpdateSlot(item);
     }
 
     public void SetupCraftSlot(ItemDataEquipment data)

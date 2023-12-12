@@ -372,7 +372,6 @@ public class Inventory : MonoBehaviour
                    equipmentSlot[i].CleanUpSlot();
                }
             }
-
         }
     }
 

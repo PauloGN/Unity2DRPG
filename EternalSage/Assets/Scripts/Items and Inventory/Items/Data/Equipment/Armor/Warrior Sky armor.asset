@@ -29,7 +29,7 @@ MonoBehaviour:
   critChance: 0
   critPower: 0
   health: 5
-  armor: 25
+  armor: 35
   evasion: 15
   magicalResistance: 0
   fireDamage: 0
@@ -37,5 +37,9 @@ MonoBehaviour:
   metalDamage: 0
   craftingMaterials:
   - data: {fileID: 11400000, guid: 4d069f960a6386c4f8bd1133d103ff6f, type: 2}
+    stackSize: 5
+  - data: {fileID: 11400000, guid: dbeb5d34ae0b36a41a1f7b461a4fc98f, type: 2}
+    stackSize: 5
+  - data: {fileID: 11400000, guid: 85caa68d210457f42ae046060f9bffd5, type: 2}
     stackSize: 5
   minDescLenght: 5

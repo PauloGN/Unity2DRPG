@@ -227,6 +227,14 @@ public class Player : Entity
         }
     }
 
+    public void UseMagicPotion(InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            Inventory.instance.UseMagicPosion();
+        }
+    }
+
     //https://stackoverflow.com/questions/62707625/unity-input-system-button-triggers-multiple-times
     //Gatantee that action will be called once
     public void SpellElements(InputAction.CallbackContext value)
